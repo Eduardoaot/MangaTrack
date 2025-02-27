@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".MenuActivity"
+    tools:visibility="visible">
+
+    <TextView
+        android:id="@+id/Menu"
+        android:layout_width="410dp"
+        android:layout_height="70dp"
+        android:background="#5BA4F5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="236dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/search_view_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Menu" />
+
+
+    <ImageButton
+        android:id="@+id/BL"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="84dp"
+        android:backgroundTint="#D9D9D9"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BC"
+        app:srcCompat="@mipmap/lectura"
+        android:elevation="5dp"/>
+
+    <Button
+        android:id="@+id/btnColec"
+        android:layout_width="247dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#5BA4F5"
+        android:text="Colección"
+        android:stateListAnimator="@null"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <Button
+        android:id="@+id/btnLec"
+        android:layout_width="247dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#5BA4F5"
+        android:text="Lectura"
+        android:stateListAnimator="@null"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnColec" />
+
+
+
+    <Button
+        android:id="@+id/btnPamo"
+        android:layout_width="247dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#5BA4F5"
+        android:text="Pamodoru"
+        android:stateListAnimator="@null"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLec" />
+
+    <Button
+        android:id="@+id/btnPresup"
+        android:layout_width="247dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#5BA4F5"
+        android:text="     Presupuestos"
+        android:stateListAnimator="@null"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPamo" />
+
+    <Button
+        android:id="@+id/btnMonetario"
+        android:layout_width="247dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#5BA4F5"
+        android:text="Monetario"
+        android:stateListAnimator="@null"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPresup" />
+
+    <ImageButton
+        android:id="@+id/BM"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="496dp"
+        android:backgroundTint="#D9D9D9"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Menu"
+        app:srcCompat="@mipmap/monetario"
+        android:elevation="5dp"/>
+
+    <Button
+        android:id="@+id/btnConfig"
+        android:layout_width="247dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#5BA4F5"
+        android:text="    Configuración"
+        android:stateListAnimator="@null"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMonetario" />
+
+    <ImageButton
+        android:id="@+id/BPR"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="408dp"
+        android:backgroundTint="#D9D9D9"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Menu"
+        app:srcCompat="@mipmap/presupuesto"
+        android:elevation="5dp"/>
+
+    <ImageButton
+        android:id="@+id/BCG"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="580dp"
+        android:backgroundTint="#D9D9D9"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Menu"
+        app:srcCompat="@mipmap/configuracion"
+        android:elevation="5dp"/>
+
+    <ImageButton
+        android:id="@+id/BP"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="324dp"
+        android:backgroundTint="#D9D9D9"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Menu"
+        app:srcCompat="@mipmap/pamodoru"
+        android:elevation="5dp"/>
+
+    <ImageButton
+        android:id="@+id/BC"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="156dp"
+        android:backgroundTint="#D9D9D9"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Menu"
+        app:srcCompat="@mipmap/coleccion"
+        android:elevation="5dp"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="254dp"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/Menu"
+        app:layout_constraintEnd_toEndOf="@+id/Menu"
+        app:layout_constraintHorizontal_bias="0.732"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.565"
+        app:srcCompat="@mipmap/mangatrack" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="98dp"
+        android:layout_height="103dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/searchView"
+        app:layout_constraintEnd_toEndOf="@+id/Menu"
+        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintStart_toStartOf="@+id/Menu"
+        app:srcCompat="@mipmap/logo" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <!-- Imagen a la izquierda -->
+        <ImageView
+            android:id="@+id/ivSerieCover"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="16dp"/>
+
+        <!-- Contenedor para los elementos de la derecha -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Título del manga -->
+            <TextView
+                android:id="@+id/tvSerieTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Título del Manga"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end"
+                tools:text="One Piece" />
+
+            <!-- Barra de progreso -->
+            <ProgressBar
+                android:id="@+id/pbSerieProgress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="21dp"
+                android:layout_marginTop="8dp"
+                android:progress="50"
+                android:progressDrawable="@drawable/progressbar_layer"
+                tools:progress="50" />
+
+            <!-- Estado del manga -->
+            <TextView
+                android:id="@+id/tvSerieStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Estado: En progreso"
+                android:textSize="14sp"
+                tools:text="Estado: En progreso" />
+
+        </LinearLayout>
+
+
+        <ImageButton
+            android:id="@+id/ibActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/boton_right" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

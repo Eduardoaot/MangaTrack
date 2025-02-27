@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "847453745539",
+    "project_id": "mangatrack-b4575",
+    "storage_bucket": "mangatrack-b4575.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:847453745539:android:7011e26eeb8a19ba1c46b6",
+        "android_client_info": {
+          "package_name": "com.aristidevs.androidmaster"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVhBLTe8pPTWJWz5htCah-CgW6erO8ovQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

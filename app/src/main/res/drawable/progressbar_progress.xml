@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- progressbar_progress.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Color de progreso azul -->
+    <solid android:color="#5BA4F5" />
+
+    <!-- Esquinas redondeadas -->
+    <corners android:radius="30dp" />
+</shape>
