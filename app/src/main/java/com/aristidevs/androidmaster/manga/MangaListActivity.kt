@@ -35,9 +35,13 @@ class MangaListActivity : AppCompatActivity() {
         setContentView(binding.root)
         retrofit = getRetrofit()
 
-        val userId = "eduardo@gmail.com"
+        val userId = intent.getIntExtra("USER_ID", -1)
 
-        initUI(userId)
+        // Verificar si el userId es válido (no es -1)
+        if (userId != -1) {
+            // Pasar el userId a initUI
+            initUI(userId.toString())
+        }
 
         // Agregar botón de flecha
         binding.btnflecha.setOnClickListener {
@@ -53,13 +57,14 @@ class MangaListActivity : AppCompatActivity() {
             GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
         binding.rvMangaList.adapter = adapter
 
+        binding.searchView.setIconifiedByDefault(false)
         // Llama a la función `searchByID` directamente con el ID deseado
-        adapter.fetchDataFromFirebase(userId)
+        searchByID(userId)
 
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-//                searchMangaByName(query.orEmpty(), userId)
+                searchMangaByName(query.orEmpty(), userId)
                 return false
             }
             override fun onQueryTextChange(newText: String?) = false
@@ -72,10 +77,10 @@ class MangaListActivity : AppCompatActivity() {
                 // Cuando el usuario presiona "Enter".
                 if (query.isNullOrEmpty()) {
                     // Si el campo de búsqueda está vacío, llama a searchByID(id).
-//                    searchByID(userId)
+                    searchByID(userId)
                 } else {
                     // Si hay texto, realiza la búsqueda por nombre.
-//                    searchMangaByName(query, userId)
+                    searchMangaByName(query, userId)
                 }
                 return true // Indica que el evento fue manejado.
             }
@@ -84,51 +89,51 @@ class MangaListActivity : AppCompatActivity() {
                 // Cuando el texto en el SearchView cambia.
                 if (newText.isNullOrEmpty()) {
                     // Si el texto está vacío (por ejemplo, el usuario hizo clic en la "X").
-//                    searchByID(userId)
+                    searchByID(userId)
                 }
                 return true // Indica que el evento fue manejado.
             }
         })
     }
 
-//    private fun searchByID(id: String){
-//        binding.progressBar.isVisible = true
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val myResponse = retrofit.create(ApiServiceManga::class.java).getMangaByID(id) // Cambia a `getMangaByID`
-//            if(myResponse.isSuccessful){
-//                Log.i("aristidevs", "Funciona")
-//                val response: MangaListDataResponse? = myResponse.body()
-//                if(response != null){
-//                    runOnUiThread {
-//                        adapter.updateList(response.mangaLista)
-//                        binding.progressBar.isVisible = false
-//                    }
-//                }
-//            } else {
-//                Log.i("aristidevs", "no funciona que pedo")
-//            }
-//        }
-//    }
-//
-//    private fun searchMangaByName(name: String, userId: String) {
-//        binding.progressBar.isVisible = true
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val myResponse = retrofit.create(ApiServiceManga::class.java).getMangaByID(userId)
-//            if (myResponse.isSuccessful) {
-//                val response: MangaListDataResponse? = myResponse.body()
-//                runOnUiThread {
-//                    if (response != null) {
-//                        // Filtrar por serieNom que coincida con el nombre ingresado
-//                        val filteredList = response.mangaLista.filter { it.serieNom.contains(name, ignoreCase = true) }
-//                        adapter.updateList(filteredList)
-//                    }
-//                    binding.progressBar.isVisible = false
-//                }
-//            } else {
-//                Log.i("aristidevs", "Error en la búsqueda")
-//            }
-//        }
-//    }
+    private fun searchByID(id: String){
+        binding.progressBar.isVisible = true
+        CoroutineScope(Dispatchers.IO).launch {
+            val myResponse = retrofit.create(ApiServiceManga::class.java).getMangaByID(id) // Cambia a `getMangaByID`
+            if(myResponse.isSuccessful){
+                Log.i("aristidevs", "Funciona")
+                val response: MangaListDataResponse? = myResponse.body()
+                if(response != null){
+                    runOnUiThread {
+                        adapter.updateList(response.mangaLista)
+                        binding.progressBar.isVisible = false
+                    }
+                }
+            } else {
+                Log.i("aristidevs", "no funciona que pedo")
+            }
+        }
+    }
+
+    private fun searchMangaByName(name: String, userId: String) {
+        binding.progressBar.isVisible = true
+        CoroutineScope(Dispatchers.IO).launch {
+            val myResponse = retrofit.create(ApiServiceManga::class.java).getMangaByID(userId)
+            if (myResponse.isSuccessful) {
+                val response: MangaListDataResponse? = myResponse.body()
+                runOnUiThread {
+                    if (response != null) {
+                        // Filtrar por serieNom que coincida con el nombre ingresado
+                        val filteredList = response.mangaLista.filter { it.serieNom.contains(name, ignoreCase = true) }
+                        adapter.updateList(filteredList)
+                    }
+                    binding.progressBar.isVisible = false
+                }
+            } else {
+                Log.i("aristidevs", "Error en la búsqueda")
+            }
+        }
+    }
 
 
 

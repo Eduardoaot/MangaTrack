@@ -28,7 +28,7 @@ class SerieListHolder(view: View): RecyclerView.ViewHolder(view) {
                 // Asegurarse de que el ProgressBar se vea y tiene el valor correcto
                 binding.pbSerieProgress.progressDrawable =
                     ContextCompat.getDrawable(binding.root.context, R.drawable.progressbar_layer2)
-                binding.pbSerieProgress.progress = (serieListaItemResponse.seriePorcentaje * 100).toInt() // Convertir a porcentaje
+                binding.pbSerieProgress.progress = (serieListaItemResponse.seriePorcentaje).toInt() // Convertir a porcentaje
                 binding.pbSerieProgress.visibility = View.VISIBLE
             }
             "Tomo único" -> {
@@ -37,7 +37,7 @@ class SerieListHolder(view: View): RecyclerView.ViewHolder(view) {
             }
             else -> {
                 // Para otros estados, se muestra el ProgressBar con el porcentaje
-                binding.pbSerieProgress.progress = (serieListaItemResponse.seriePorcentaje * 100).toInt()
+                binding.pbSerieProgress.progress = (serieListaItemResponse.seriePorcentaje).toInt()
                 binding.pbSerieProgress.visibility = View.VISIBLE
             }
         }

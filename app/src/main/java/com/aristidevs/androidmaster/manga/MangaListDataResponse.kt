@@ -1,8 +1,14 @@
 package com.aristidevs.androidmaster.manga
+import com.google.gson.annotations.SerializedName
+
+class MangaListDataResponse (
+    @SerializedName("response") val response: String,
+    @SerializedName("result") val mangaLista: List<MangaListaItemResponse>
+)
 
 data class MangaListaItemResponse(
-    val mangaNum: Double,  // Si usas números para los volúmenes
-    val mangaImg: String,  // URL de la imagen
-    val serieNom: String   // Nombre de la serie
+    @SerializedName("mangaNum") val mangaNum: String,
+    @SerializedName("mangaImg") val mangaImg: String,
+    @SerializedName("serieNom") val serieNom: String
 )
 
