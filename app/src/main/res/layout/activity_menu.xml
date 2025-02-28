@@ -22,14 +22,12 @@
         android:id="@+id/searchIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintStart_toStartOf="@+id/searchViewMenu"
-        android:layout_margin="4dp"
-        app:layout_constraintTop_toTopOf="@+id/searchViewMenu"
-        app:layout_constraintBottom_toBottomOf="@+id/searchViewMenu"
-        android:elevation="10dp"/>
+        android:src="@mipmap/lupa"
+        android:layout_marginStart="10dp"
+        android:elevation="10dp"
+        app:layout_constraintStart_toStartOf="@id/searchViewMenu"
+        app:layout_constraintTop_toTopOf="@id/searchViewMenu"
+        app:layout_constraintBottom_toBottomOf="@id/searchViewMenu"/>
 
 
     <ImageButton

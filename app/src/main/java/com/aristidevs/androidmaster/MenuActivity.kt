@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
+import com.aristidevs.androidmaster.buscador.BuscadorActivity
 import com.aristidevs.androidmaster.coleccion.ColeccionDetallesActivity
 import com.aristidevs.androidmaster.firstapp.FirstAppActivity
 import com.aristidevs.androidmaster.imccalculator.ImcCalculatorActivity
@@ -37,12 +38,18 @@ class MenuActivity : AppCompatActivity() {
 
         // Setear los listeners para los botones
         btnColeccion.setOnClickListener { navigateToColeccion(userId) }
-        searchViewMenu.setOnClickListener { navigateToColeccion(userId) }
+        searchViewMenu.setOnClickListener { navigateToBuscador(userId) }
         btnConfig.setOnClickListener { cerrarSesion() }
     }
 
     private fun navigateToColeccion(userId: Int) {
         val intent = Intent(this, ColeccionDetallesActivity::class.java)
+        intent.putExtra("USER_ID", userId) // Pasar el ID como un extra
+        startActivity(intent)
+    }
+
+    private fun navigateToBuscador(userId: Int) {
+        val intent = Intent(this, BuscadorActivity::class.java)
         intent.putExtra("USER_ID", userId) // Pasar el ID como un extra
         startActivity(intent)
     }

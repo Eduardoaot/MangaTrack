@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import com.aristidevs.androidmaster.MenuActivity
 import com.aristidevs.androidmaster.databinding.ActivityInicioSesionBinding
 import com.aristidevs.androidmaster.manga.ApiServiceManga
+import com.aristidevs.androidmaster.network.RetrofitClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class InicioSesionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityInicioSesionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        retrofit = getRetrofit()
+        retrofit = RetrofitClient.getRetrofit()
 
         // Verificar si el usuario ya está autenticado
         if (verificarSesion()) {
@@ -140,13 +141,6 @@ class InicioSesionActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun getRetrofit(): Retrofit {
-        return Retrofit
-            .Builder()
-            .baseUrl("http://192.168.1.69:8080/")  // Reemplaza con tu URL
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
 
     private fun InicioSesion(){
         binding.NombreRegistro.isVisible = false

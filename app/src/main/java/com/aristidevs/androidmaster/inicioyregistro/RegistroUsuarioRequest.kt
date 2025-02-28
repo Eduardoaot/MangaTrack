@@ -1,8 +1,8 @@
 package com.aristidevs.androidmaster.inicioyregistro
 
 data class RegistroUsuarioRequest(
+    val name: String,
     val email: String,
-    val password: String,
     val user: String,
-    val name: String
+    val password: String
 )

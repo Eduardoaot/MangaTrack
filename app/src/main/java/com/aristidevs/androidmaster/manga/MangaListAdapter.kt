@@ -7,7 +7,10 @@ import com.aristidevs.androidmaster.R
 import com.aristidevs.androidmaster.superheroapp.SuperheroItemResponse
 import com.google.firebase.firestore.FirebaseFirestore
 
-class MangaListAdapter(var mangaList: List<MangaListaItemResponse> = emptyList()) :
+class MangaListAdapter(
+    var mangaList: List<MangaListaItemResponse> = emptyList(),
+    private val onItemSelected:(Int)-> Unit
+) :
     RecyclerView.Adapter<MangaListHolder>() {
 
     fun updateList(list: List<MangaListaItemResponse>) {
@@ -22,8 +25,7 @@ class MangaListAdapter(var mangaList: List<MangaListaItemResponse> = emptyList()
     }
 
     override fun onBindViewHolder(viewholder: MangaListHolder, position: Int) {
-        val item = mangaList[position]
-        viewholder.bind(item)
+        viewholder.bind(mangaList[position], onItemSelected)
     }
 
     override fun getItemCount() = mangaList.size

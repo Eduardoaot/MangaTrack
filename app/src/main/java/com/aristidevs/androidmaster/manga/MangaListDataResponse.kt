@@ -9,6 +9,7 @@ class MangaListDataResponse (
 data class MangaListaItemResponse(
     @SerializedName("mangaNum") val mangaNum: String,
     @SerializedName("mangaImg") val mangaImg: String,
-    @SerializedName("serieNom") val serieNom: String
+    @SerializedName("serieNom") val serieNom: String,
+    @SerializedName("idManga") val mangaId: Int
 )
 

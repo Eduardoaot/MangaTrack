@@ -12,6 +12,7 @@ import com.aristidevs.androidmaster.R
 import com.aristidevs.androidmaster.databinding.ActivitySerieListBinding
 import com.aristidevs.androidmaster.manga.ApiServiceManga
 import com.aristidevs.androidmaster.manga.MangaListAdapter
+import com.aristidevs.androidmaster.network.RetrofitClient
 //import com.aristidevs.androidmaster.manga.MangaListDataResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +30,7 @@ class SerieListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySerieListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        retrofit = getRetrofit()
+        retrofit = RetrofitClient.getRetrofit()
 
         val userId = intent.getIntExtra("USER_ID", -1)
 
@@ -132,12 +133,4 @@ class SerieListActivity : AppCompatActivity() {
     }
 
 
-
-    private fun getRetrofit(): Retrofit {
-        return Retrofit
-            .Builder()
-            .baseUrl("http://192.168.1.69:8080/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
 }

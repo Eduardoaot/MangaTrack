@@ -9,7 +9,7 @@ class MangaListHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val binding = ItemMangalistBinding.bind(view)
 
-    fun bind(mangaListaItemResponse: MangaListaItemResponse) {
+    fun bind(mangaListaItemResponse: MangaListaItemResponse, onItemSelected: (Int) -> Unit) {
         val mangaNum = mangaListaItemResponse.mangaNum.toFloat()
 
         // Verifica si el número tiene decimales y si no, lo muestra sin ellos
@@ -19,6 +19,7 @@ class MangaListHolder(view: View) : RecyclerView.ViewHolder(view) {
             mangaNum.toString() // Si tiene decimales, lo mostramos completo
         }
 
+        binding.root.setOnClickListener {onItemSelected(mangaListaItemResponse.mangaId)}
         binding.tvMangaListNumber.text = mangaNumText
         Picasso.get().load(mangaListaItemResponse.mangaImg).into(binding.ivMangaListImage)
     }

@@ -1,5 +1,6 @@
 package com.aristidevs.androidmaster.manga
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.aristidevs.androidmaster.R
 import com.aristidevs.androidmaster.databinding.ActivityMangaListBinding
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion.MANGA_ID
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion.USER_ID
+import com.aristidevs.androidmaster.network.RetrofitClient
 import com.aristidevs.androidmaster.superheroapp.ApiService
 import com.aristidevs.androidmaster.superheroapp.SuperHeroDetailResponse
 import com.google.firebase.firestore.FirebaseFirestore
@@ -33,7 +38,7 @@ class MangaListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMangaListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        retrofit = getRetrofit()
+        retrofit = RetrofitClient.getRetrofit()
 
         val userId = intent.getIntExtra("USER_ID", -1)
 
@@ -51,7 +56,7 @@ class MangaListActivity : AppCompatActivity() {
     }
 
     private fun initUI(userId: String) {
-        adapter = MangaListAdapter()
+        adapter = MangaListAdapter { navigateToDetail(it, userId.toInt()) }
         binding.rvMangaList.setHasFixedSize(true)
         binding.rvMangaList.layoutManager =
             GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
@@ -69,8 +74,6 @@ class MangaListActivity : AppCompatActivity() {
             }
             override fun onQueryTextChange(newText: String?) = false
         })
-
-
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -135,13 +138,14 @@ class MangaListActivity : AppCompatActivity() {
         }
     }
 
+    private fun navigateToDetail(id_manga: Int, id_usuario: Int) {
 
+        Log.d("NavigateToDetail", "ID serie: $id_manga")
+        Log.d("NavigateToDetail", "ID usuario: $id_usuario")
 
-    private fun getRetrofit(): Retrofit {
-        return Retrofit
-            .Builder()
-            .baseUrl("http://192.168.1.69:8080/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        val intent = Intent(this, DetalleMangaActivity::class.java)
+        intent.putExtra(MANGA_ID, id_manga) // Pasar el ID como un extra
+        intent.putExtra(USER_ID, id_usuario)
+        startActivity(intent)
     }
 }

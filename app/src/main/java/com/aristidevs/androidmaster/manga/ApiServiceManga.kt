@@ -1,6 +1,11 @@
 package com.aristidevs.androidmaster.manga
 
+import com.aristidevs.androidmaster.buscador.BuscadorDataResponse
+import com.aristidevs.androidmaster.buscador.BuscadorDetallesDataResponse
 import com.aristidevs.androidmaster.coleccion.ColeccionDetallesDataResponse
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaDataResponse
+import com.aristidevs.androidmaster.detallesmanga.MarcarLeidoRequest
+import com.aristidevs.androidmaster.detallesmanga.MarcarLeidoResponse
 import com.aristidevs.androidmaster.inicioyregistro.LoginRequest
 import com.aristidevs.androidmaster.inicioyregistro.RegistroUsuarioRequest
 import com.aristidevs.androidmaster.inicioyregistro.RegistroUsuarioResponse
@@ -11,6 +16,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiServiceManga {
 
@@ -33,5 +39,17 @@ interface ApiServiceManga {
     // Método GET para autenticar un usuario
     @POST("/api/usuarios/autenticar")
     suspend fun autenticarUsuario(@Body usuario: LoginRequest): Response<UsuarioResponse>
+
+    @GET("/api/series/buscar")
+    suspend fun searchSeries(@Query("query") query: String): Response<BuscadorDataResponse>
+
+    @GET("/api/series/buscar")
+    suspend fun searchSearchDataSeries(@Query("query") query: String): Response<BuscadorDetallesDataResponse>
+
+    @GET("/api/manga/{id_manga}/{id_usurious}/detalles")
+    suspend fun searchAllDataManga(@Path("id_manga") idManga: String, @Path("id_usurious") idUsuario: String): Response<DetalleMangaDataResponse>
+
+    @POST("/api/manga/actualizarEstadoLectura")
+    suspend fun modificarLectura(@Body actualizar: MarcarLeidoRequest): Response<MarcarLeidoResponse>
 
 }

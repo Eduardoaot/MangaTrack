@@ -16,6 +16,18 @@
         android:theme="@style/Theme.AndroidMaster"
         tools:targetApi="31">
         <activity
+            android:name=".detallesserie.DetalleSerieActivity"
+            android:exported="false" />
+        <activity
+            android:name=".detallesmanga.DetalleMangaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".buscador.BuscadorDetallesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".buscador.BuscadorActivity"
+            android:exported="false" />
+        <activity
             android:name=".iniciosesion.InicioSesionMainActivity"
             android:exported="true"
             android:theme="@style/SplashScreen">

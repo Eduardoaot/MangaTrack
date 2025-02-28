@@ -10,11 +10,15 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.aristidevs.androidmaster.R
 import com.aristidevs.androidmaster.databinding.ActivityColeccionDetallesBinding
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion.MANGA_ID
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion.USER_ID
 import com.aristidevs.androidmaster.manga.ApiServiceManga
 import com.aristidevs.androidmaster.manga.MangaListAdapter
 import com.aristidevs.androidmaster.manga.MangaListDataResponse
 import com.aristidevs.androidmaster.serie.SerieListActivity
 import com.aristidevs.androidmaster.manga.MangaListActivity
+import com.aristidevs.androidmaster.network.RetrofitClient
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +39,7 @@ class ColeccionDetallesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityColeccionDetallesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        retrofit = getRetrofit()
+        retrofit = RetrofitClient.getRetrofit()
         val userId = intent.getIntExtra("USER_ID", -1)
 
         // Verificar si el userId es válido (no es -1)
@@ -66,7 +70,7 @@ class ColeccionDetallesActivity : AppCompatActivity() {
         binding.progressBarCarga.isVisible = true // Mostrar el ProgressBar
 
 
-        adapter = MangaListAdapter()
+        adapter = MangaListAdapter { navigateToDetail(it, userId.toInt()) }
         binding.rvMangaListColeccion.setHasFixedSize(true)
         binding.rvMangaListColeccion.layoutManager =
             GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
@@ -162,12 +166,14 @@ class ColeccionDetallesActivity : AppCompatActivity() {
         }
     }
 
+    private fun navigateToDetail(id_manga: Int, id_usuario: Int) {
 
-    private fun getRetrofit(): Retrofit {
-        return Retrofit
-            .Builder()
-            .baseUrl("http://192.168.1.69:8080/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        Log.d("NavigateToDetail", "ID serie: $id_manga")
+        Log.d("NavigateToDetail", "ID usuario: $id_usuario")
+
+        val intent = Intent(this, DetalleMangaActivity::class.java)
+        intent.putExtra(MANGA_ID, id_manga) // Pasar el ID como un extra
+        intent.putExtra(USER_ID, id_usuario)
+        startActivity(intent)
     }
 }
