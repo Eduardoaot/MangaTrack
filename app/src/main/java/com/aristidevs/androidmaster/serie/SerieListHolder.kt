@@ -12,7 +12,10 @@ class SerieListHolder(view: View): RecyclerView.ViewHolder(view) {
 
     private val binding = ItemSerielistBinding.bind(view)
 
-    fun bind(serieListaItemResponse: SerieListaItemResponse) {
+    fun bind(
+        serieListaItemResponse: SerieListaItemResponse,
+        onItemSelected: (Int) -> Unit
+    ) {
         // Setear el nombre de la serie
         binding.tvSerieTitle.text = serieListaItemResponse.SerieNom
 
@@ -41,5 +44,8 @@ class SerieListHolder(view: View): RecyclerView.ViewHolder(view) {
                 binding.pbSerieProgress.visibility = View.VISIBLE
             }
         }
+
+        binding.ibActionButton.setOnClickListener { onItemSelected(serieListaItemResponse.serieId.toInt()) }
     }
+
 }

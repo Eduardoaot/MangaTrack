@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.aristidevs.androidmaster.R
+import com.aristidevs.androidmaster.coleccion.ColeccionDetallesActivity
 import com.aristidevs.androidmaster.databinding.ActivityMangaListBinding
 import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity
 import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion.MANGA_ID
@@ -31,6 +32,8 @@ class MangaListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMangaListBinding
     private lateinit var retrofit: Retrofit
     private lateinit var adapter: MangaListAdapter
+    private var shouldUpdateList = false
+
     private var db = FirebaseFirestore.getInstance()
 
 
@@ -39,6 +42,7 @@ class MangaListActivity : AppCompatActivity() {
         binding = ActivityMangaListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         retrofit = RetrofitClient.getRetrofit()
+
 
         val userId = intent.getIntExtra("USER_ID", -1)
 
@@ -50,8 +54,16 @@ class MangaListActivity : AppCompatActivity() {
 
         // Agregar botón de flecha
         binding.btnflecha.setOnClickListener {
-            // Acción para regresar a la actividad anterior utilizando onBackPressedDispatcher
             onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val userId = intent.getIntExtra("USER_ID", -1)
+        if (userId != -1) {
+
+            initUI(userId.toString())
         }
     }
 
@@ -139,7 +151,6 @@ class MangaListActivity : AppCompatActivity() {
     }
 
     private fun navigateToDetail(id_manga: Int, id_usuario: Int) {
-
         Log.d("NavigateToDetail", "ID serie: $id_manga")
         Log.d("NavigateToDetail", "ID usuario: $id_usuario")
 
@@ -148,4 +159,5 @@ class MangaListActivity : AppCompatActivity() {
         intent.putExtra(USER_ID, id_usuario)
         startActivity(intent)
     }
+
 }

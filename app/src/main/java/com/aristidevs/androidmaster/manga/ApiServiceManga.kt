@@ -3,7 +3,10 @@ package com.aristidevs.androidmaster.manga
 import com.aristidevs.androidmaster.buscador.BuscadorDataResponse
 import com.aristidevs.androidmaster.buscador.BuscadorDetallesDataResponse
 import com.aristidevs.androidmaster.coleccion.ColeccionDetallesDataResponse
+import com.aristidevs.androidmaster.detallesmanga.AgregarMangaResponse
 import com.aristidevs.androidmaster.detallesmanga.DetalleMangaDataResponse
+import com.aristidevs.androidmaster.detallesmanga.EliminarMangaResponse
+import com.aristidevs.androidmaster.detallesmanga.EliminarYAgregarMangaRequest
 import com.aristidevs.androidmaster.detallesmanga.MarcarLeidoRequest
 import com.aristidevs.androidmaster.detallesmanga.MarcarLeidoResponse
 import com.aristidevs.androidmaster.inicioyregistro.LoginRequest
@@ -51,5 +54,16 @@ interface ApiServiceManga {
 
     @POST("/api/manga/actualizarEstadoLectura")
     suspend fun modificarLectura(@Body actualizar: MarcarLeidoRequest): Response<MarcarLeidoResponse>
+
+    @POST("/api/coleccion-manga/eliminar-manga")
+    suspend fun eliminarManga(@Body actualizar: EliminarYAgregarMangaRequest): Response<EliminarMangaResponse>
+
+    @POST("/api/coleccion-manga/agregar-manga")
+    suspend fun agregarManga(@Body actualizar: EliminarYAgregarMangaRequest): Response<AgregarMangaResponse>
+
+    @GET("/api/seriesdetalles/detalles/{id_usuario}/{id_serie}")
+    suspend fun searchDataSerie(@Path("id_usuario") idManga: String, @Path("id_serie") idUsuario: String): Response<DetalleSerieDataResponse>
+
+
 
 }

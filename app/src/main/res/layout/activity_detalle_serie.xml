@@ -7,4 +7,297 @@
     android:layout_height="match_parent"
     tools:context=".detallesserie.DetalleSerieActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMangasListaAAgregar"
+        android:layout_width="408dp"
+        android:layout_height="210dp"
+        android:layout_marginTop="10dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layaoutbarradeprogreso"
+        app:layout_constraintVertical_bias="0.493"
+        app:spanCount="3" />
+
+    <TextView
+        android:id="@+id/txtTituloSerie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="AQUI VA EL NOMBRE DEL COMIC"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Menu" />
+
+    <TextView
+        android:id="@+id/txtTotalMangasSerie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="Total: 50 mangas"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Menu" />
+
+
+    <TextView
+        android:id="@+id/Menu"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#5BA4F5"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@drawable/fondoredondo"
+        android:padding="5dp"
+        android:text="    Serie Detalle    "
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="26sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#5BA4F5"
+        app:layout_constraintBottom_toBottomOf="@+id/Menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Menu"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <ImageView
+        android:id="@+id/btnflecha"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        android:backgroundTint="#5BA4F5"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtDescripcion"
+        android:layout_width="370dp"
+        android:layout_height="160dp"
+        android:fontFamily="@font/poppins_medium"
+        android:justificationMode="inter_word"
+        android:text="Este manga esta bien chido"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="54dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/borde"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/txtAutor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aka Akasaka"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/poppins_bold"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        android:layout_marginTop="210dp"
+        android:text="Descripción"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/layaoutbarradeprogreso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Autores:"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.169"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+    <TextView
+        android:id="@+id/txtTotalFaltanLeer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="40dp"
+        android:fontFamily="@font/poppins_smibold"
+        app:layout_constraintBottom_toTopOf="@+id/TXTPORLEER"
+        app:layout_constraintEnd_toEndOf="@+id/TXTPORLEER"
+        app:layout_constraintStart_toStartOf="@+id/TXTPORLEER"
+        />
+
+    <TextView
+        android:id="@+id/TXTPORLEER"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="25dp"
+        android:text="POR LEER"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/layaoutbarradeprogreso"
+        />
+
+    <TextView
+        android:id="@+id/txtTotalMangaTengo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="13"
+        android:textSize="40dp"
+        android:fontFamily="@font/poppins_smibold"
+        app:layout_constraintBottom_toTopOf="@+id/TXTTENGO"
+        app:layout_constraintEnd_toEndOf="@+id/TXTTENGO"
+        app:layout_constraintStart_toStartOf="@+id/TXTTENGO"
+        />
+
+    <TextView
+        android:id="@+id/TXTTENGO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:text="TENGO"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/layaoutbarradeprogreso"
+        />
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layaoutbarradeprogreso"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTotalMangasSerie">
+
+        <!-- Barra de progreso Colección (más grande) -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/bdpColeccion"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:progress="80"
+            app:indicatorColor="@color/blue"
+            app:indicatorSize="120dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackColor="@color/coleccionClaro"
+            app:trackThickness="6dp" />
+
+        <!-- Barra de progreso Lectura (más pequeña) centrada respecto a bdpColeccion -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/bdpLectura"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:progress="60"
+            app:indicatorColor="@color/purple_200"
+            app:indicatorSize="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/bdpColeccion"
+            app:layout_constraintTop_toTopOf="@+id/bdpColeccion"
+            app:layout_constraintEnd_toEndOf="@+id/bdpColeccion"
+            app:layout_constraintStart_toStartOf="@+id/bdpColeccion"
+            app:trackColor="@color/lecturaClaro"
+            app:trackThickness="6dp" />
+
+        <TextView
+            android:id="@+id/txtEstadoCompletado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UP TO DATE!"
+            android:layout_marginTop="15dp"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="@id/bdpLectura"
+            app:layout_constraintEnd_toEndOf="@id/bdpLectura"
+
+            app:layout_constraintTop_toTopOf="@id/bdpLectura"
+            app:layout_constraintBottom_toBottomOf="@id/bdpLectura"
+            />
+
+        <ImageView
+            android:id="@+id/imgCorazon"
+            android:layout_width="31dp"
+            android:layout_height="29dp"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintStart_toStartOf="@id/bdpLectura"
+            app:layout_constraintEnd_toEndOf="@id/bdpLectura"
+            app:layout_constraintTop_toTopOf="@id/bdpLectura"
+            app:layout_constraintBottom_toBottomOf="@id/bdpLectura"
+
+            app:srcCompat="@mipmap/cor" />
+
+        <TextView
+            android:id="@+id/txtEstadoIncompleto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ME FALTAN"
+            android:layout_marginBottom="40dp"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="@id/bdpLectura"
+            app:layout_constraintEnd_toEndOf="@id/bdpLectura"
+            app:layout_constraintTop_toTopOf="@id/bdpLectura"
+            app:layout_constraintBottom_toBottomOf="@id/bdpLectura"
+            />
+
+        <TextView
+            android:id="@+id/txtNumeroEstadoIncompleto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:layout_marginTop="25dp"
+            android:textSize="40sp"
+            app:layout_constraintStart_toStartOf="@id/bdpLectura"
+            app:layout_constraintEnd_toEndOf="@id/bdpLectura"
+            app:layout_constraintTop_toTopOf="@id/bdpLectura"
+            app:layout_constraintBottom_toBottomOf="@id/bdpLectura"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

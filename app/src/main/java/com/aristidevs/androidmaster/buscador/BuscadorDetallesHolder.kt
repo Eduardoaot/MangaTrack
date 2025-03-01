@@ -16,6 +16,9 @@ class BuscadorDetallesHolder(view: View) : RecyclerView.ViewHolder(view) {
         // Asignamos los valores a las vistas del layout
         binding.txtTitle.text = busquedaListaDetallesItemResponse.serieNom
         binding.txtTotalSerieDetalleB.text = "Colección de: " + busquedaListaDetallesItemResponse.serieTotalTomos + " números."
+        if (busquedaListaDetallesItemResponse.serieTotalTomos == "1"){
+            binding.txtTotalSerieDetalleB.text = "Tomo único."
+        }
         Picasso.get().load(busquedaListaDetallesItemResponse.serieImg).into(binding.imgCover)
 
         // Establecemos el listener para el botón
@@ -23,5 +26,6 @@ class BuscadorDetallesHolder(view: View) : RecyclerView.ViewHolder(view) {
             // Llamamos a la función cuando el botón es clickeado
             onItemSelected(busquedaListaDetallesItemResponse.serieId)
         }
+
     }
 }

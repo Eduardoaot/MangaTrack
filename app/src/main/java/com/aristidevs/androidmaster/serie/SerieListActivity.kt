@@ -1,5 +1,6 @@
 package com.aristidevs.androidmaster.serie
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +10,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.aristidevs.androidmaster.R
+import com.aristidevs.androidmaster.coleccion.ColeccionDetallesActivity
 import com.aristidevs.androidmaster.databinding.ActivitySerieListBinding
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity
+import com.aristidevs.androidmaster.detallesserie.DetalleSerieActivity
 import com.aristidevs.androidmaster.manga.ApiServiceManga
 import com.aristidevs.androidmaster.manga.MangaListAdapter
 import com.aristidevs.androidmaster.network.RetrofitClient
@@ -42,14 +46,21 @@ class SerieListActivity : AppCompatActivity() {
 
         // Agregar botón de flecha
         binding.btnflecha.setOnClickListener {
-            // Acción para regresar a la actividad anterior utilizando onBackPressedDispatcher
             onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val userId = intent.getIntExtra("USER_ID", -1)
+        if (userId != -1) {
+            initUI(userId.toString())
         }
     }
 
     private fun initUI(userId: String) {
         // Inicializa el adaptador y configura el RecyclerView
-        adapter = SerieListAdapter()
+        adapter = SerieListAdapter { navigateToDetail(it, userId.toInt()) }
         binding.rvSerieList.setHasFixedSize(true)
         binding.rvSerieList.layoutManager =
             GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
@@ -130,6 +141,17 @@ class SerieListActivity : AppCompatActivity() {
                 Log.i("aristidevs", "Error en la búsqueda")
             }
         }
+    }
+
+    private fun navigateToDetail(id_serie: Int, id_usuario: Int) {
+
+        Log.d("NavigateToDetail", "ID serie: $id_serie")
+        Log.d("NavigateToDetail", "ID usuario: $id_usuario")
+
+        val intent = Intent(this, DetalleSerieActivity::class.java)
+        intent.putExtra(DetalleMangaActivity.SERIE_ID, id_serie.toInt()) // Pasar el ID como un extra
+        intent.putExtra(DetalleMangaActivity.USER_ID, id_usuario)
+        startActivity(intent)
     }
 
 

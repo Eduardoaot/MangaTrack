@@ -7,6 +7,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.aristidevs.androidmaster.databinding.ActivityBuscadorDetallesBinding
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion.SERIE_ID
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion.USER_ID
 import com.aristidevs.androidmaster.detallesserie.DetalleSerieActivity
 import com.aristidevs.androidmaster.manga.ApiServiceManga
 import com.aristidevs.androidmaster.network.RetrofitClient
@@ -88,8 +90,8 @@ class BuscadorDetallesActivity : AppCompatActivity() {
         Log.d("NavigateToDetail", "ID usuario: $id_usuario")
 
         val intent = Intent(this, DetalleSerieActivity::class.java)
-        intent.putExtra("SERIE_ID", id_serie.toInt()) // Pasar el ID como un extra
-        intent.putExtra("USER_ID", id_usuario)
+        intent.putExtra(SERIE_ID, id_serie.toInt()) // Pasar el ID como un extra
+        intent.putExtra(USER_ID, id_usuario)
         startActivity(intent)
     }
 }

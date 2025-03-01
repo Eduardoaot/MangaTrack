@@ -25,6 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.concurrent.thread
 
 class ColeccionDetallesActivity : AppCompatActivity() {
 
@@ -49,8 +50,17 @@ class ColeccionDetallesActivity : AppCompatActivity() {
         }
 
         binding.btnflecha.setOnClickListener {
-            // Acción para regresar a la actividad anterior utilizando onBackPressedDispatcher
+            Log.i("aristidevs", "funciona para atras")
             onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val userId = intent.getIntExtra("USER_ID", -1)
+        if (userId != -1) {
+            // Pasar el userId a initUI
+            initUI(userId)  // Aquí puedes pasar userId como Int directamente
         }
     }
 

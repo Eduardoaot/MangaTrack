@@ -9,7 +9,10 @@ import com.aristidevs.androidmaster.serie.SerieListHolder
 import com.aristidevs.androidmaster.serie.SerieListaItemResponse
 import com.google.firebase.firestore.FirebaseFirestore
 
-class SerieListAdapter(var serieList: List<SerieListaItemResponse> = emptyList()) :
+class SerieListAdapter(
+    var serieList: List<SerieListaItemResponse> = emptyList(),
+    private val onItemSelected: (Int) -> Unit
+) :
     RecyclerView.Adapter<SerieListHolder>() {
 
     fun updateList(list: List<SerieListaItemResponse>) {
@@ -24,8 +27,7 @@ class SerieListAdapter(var serieList: List<SerieListaItemResponse> = emptyList()
     }
 
     override fun onBindViewHolder(viewholder: SerieListHolder, position: Int) {
-        val item = serieList[position]
-        viewholder.bind(item)
+        viewholder.bind(serieList[position], onItemSelected)
     }
 
     override fun getItemCount() = serieList.size

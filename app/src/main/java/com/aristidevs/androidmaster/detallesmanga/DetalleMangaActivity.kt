@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,11 +20,13 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 
 class DetalleMangaActivity : AppCompatActivity() {
 
     companion object{
+        const val SERIE_ID = "serie_id"
         const val USER_ID = "user_id"
         const val MANGA_ID = "manga_id"
     }
@@ -50,16 +53,97 @@ class DetalleMangaActivity : AppCompatActivity() {
         searchManga(id_manga, id_usuario)
         val imagenLectura = findViewById<ImageView>(R.id.imagenLectura)
 
-
-
         binding.btnMarcarLeido.setOnClickListener {
             MarcarLeido(id_manga, id_usuario, imagenLectura)
         }
 
         binding.btnAgregarManga.setOnClickListener {
+            AgregarManga(id_manga,id_usuario)
+        }
 
+        binding.botonEliminarManga.setOnClickListener {
+            EliminarManga(id_manga, id_usuario)
         }
     }
+
+    private fun EliminarManga(idManga: Int, idUsuario: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val request = EliminarYAgregarMangaRequest(idManga, idUsuario)
+
+            try {
+                // Realiza la llamada a la API para eliminar el manga
+                val myResponse = retrofit.create(ApiServiceManga::class.java).eliminarManga(request)
+
+                if (myResponse.isSuccessful) {
+                    // Si la respuesta es exitosa
+                    val message = myResponse.body()?.message ?: "Manga eliminado correctamente"
+
+                    // Actualizamos la interfaz en el hilo principal usando runOnUiThread
+                    runOnUiThread {
+                        Toast.makeText(this@DetalleMangaActivity, message, Toast.LENGTH_SHORT).show()
+                        binding.imagenLectura.isVisible = false  // Hacer invisible la imagen
+                        binding.btnMarcarLeido.isVisible = false
+
+                        // Cambiar la visibilidad de los botones
+                        binding.botonEliminarManga.isVisible = false
+                        binding.btnAgregarManga.isVisible = true
+                    }
+                } else {
+                    // Si la respuesta no es exitosa
+                    runOnUiThread {
+                        Toast.makeText(this@DetalleMangaActivity, "Error al eliminar manga", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                // Manejo de errores de red
+                runOnUiThread {
+                    Toast.makeText(this@DetalleMangaActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+
+
+    private fun AgregarManga(idManga: Int, idUsuario: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val request = EliminarYAgregarMangaRequest(idManga, idUsuario)
+
+            try {
+                // Realiza la llamada a la API para agregar el manga
+                val myResponse = retrofit.create(ApiServiceManga::class.java).agregarManga(request)
+
+                if (myResponse.isSuccessful) {
+                    // Si la respuesta es exitosa
+                    val message = myResponse.body()?.message ?: "Manga agregado correctamente"
+                    val idMangaAgregado = myResponse.body()?.idMangaAgregado
+
+                    // Actualizamos la interfaz en el hilo principal usando runOnUiThread
+                    runOnUiThread {
+                        Toast.makeText(this@DetalleMangaActivity, message, Toast.LENGTH_SHORT).show()
+                        // Aquí puedes actualizar la UI si el manga fue agregado
+                        binding.imagenLectura.isVisible = true  // Hacer visible la imagen (ajustar según el caso)
+                        binding.btnMarcarLeido.isVisible = true  // Hacer visible el botón "Marcar leído"
+
+                        // Cambiar la visibilidad de los botones
+                        binding.botonEliminarManga.isVisible = true  // Hacer visible el botón de eliminar
+                        binding.btnAgregarManga.isVisible = false  // Hacer invisible el botón de agregar
+                    }
+                } else {
+                    // Si la respuesta no es exitosa
+                    runOnUiThread {
+                        Toast.makeText(this@DetalleMangaActivity, "Error al agregar manga", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                // Manejo de errores de red
+                runOnUiThread {
+                    Toast.makeText(this@DetalleMangaActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
 
     private fun searchManga(id_manga: Int, id_usuario: Int) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -107,20 +191,22 @@ class DetalleMangaActivity : AppCompatActivity() {
                             binding.btnMarcarLeido.isVisible = false  // Hacer invisible el botón "Marcar Leído"
 
                             // Cambiar el estilo del botón "Agregar Manga"
-                            binding.btnAgregarManga.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFFFFF"))
-                            binding.btnAgregarManga.setTextColor(Color.parseColor("#5BA4F5"))
-                            binding.btnAgregarManga.text = "Agregar manga"
-                        } else {
+                            binding.btnAgregarManga.isVisible = true
+                            binding.botonEliminarManga.isVisible = false
+                            Log.i("aristidevs", "Paso por valor a 0")
+                        } else{
                             // Si estadoAgregado es 1:
                             binding.imagenLectura.isVisible = true  // Hacer visible la imagen
                             binding.btnMarcarLeido.isVisible = true  // Hacer visible el botón "Marcar Leído"5BA4F5
 
+                            binding.btnAgregarManga.isVisible = false
+                            binding.botonEliminarManga.isVisible = true
                             // Cambiar el estilo del botón "Agregar Manga"
-                            binding.btnAgregarManga.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#5BA4F5"))
-                            binding.btnAgregarManga.setTextColor(Color.parseColor("#FFFFFF"))
-                            binding.btnAgregarManga.text = "Eliminar manga"
+                            Log.i("aristidevs", "Paso por valor a 1")
                         }
-                        
+                        Log.i("aristidevs", "Valor de despues del if: $estadoAgregado")
+                        Log.i("aristidevs", "Ya mamo")
+
                         // Si existe el detalle del manga
                         if (mangaDetalle != null) {
                             // Cargar la imagen con Picasso
@@ -161,10 +247,8 @@ class DetalleMangaActivity : AppCompatActivity() {
                                 "Leido" -> 2  // Si es Leido, el estado es 1
                                 else -> return@runOnUiThread  // Si no es ninguno de estos, no hacemos nada
                             }
-
                             // Creamos el objeto para el cuerpo de la solicitud POST
                             val marcarLeidoRequest = MarcarLeidoRequest(id_manga, id_usuario, nuevoEstadoLectura)
-
                             // Realizamos el POST con Retrofit
                             CoroutineScope(Dispatchers.IO).launch {
                                 try {
