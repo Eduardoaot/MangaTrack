@@ -82,7 +82,7 @@ class InicioSesionActivity : AppCompatActivity() {
 
     private fun registrarUsuario(nombre: String, email: String, usuario: String, contrasena: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val nuevoUsuario = RegistroUsuarioRequest(nombre, email, usuario, contrasena)
+            val nuevoUsuario = RegistroUsuarioRequest(nombre, email, usuario, contrasena, 0)
             val myResponse = retrofit.create(ApiServiceManga::class.java).registrarUsuario(nuevoUsuario)
 
             if (myResponse.isSuccessful) {

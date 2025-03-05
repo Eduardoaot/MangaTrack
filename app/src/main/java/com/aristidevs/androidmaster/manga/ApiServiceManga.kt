@@ -2,7 +2,7 @@ package com.aristidevs.androidmaster.manga
 
 import com.aristidevs.androidmaster.buscador.BuscadorDataResponse
 import com.aristidevs.androidmaster.buscador.BuscadorDetallesDataResponse
-import com.aristidevs.androidmaster.coleccion.ColeccionDetallesDataResponse
+import com.aristidevs.androidmaster.principalcoleccion.ColeccionDetallesDataResponse
 import com.aristidevs.androidmaster.detallesmanga.AgregarMangaResponse
 import com.aristidevs.androidmaster.detallesmanga.DetalleMangaDataResponse
 import com.aristidevs.androidmaster.detallesmanga.EliminarMangaResponse
@@ -13,6 +13,10 @@ import com.aristidevs.androidmaster.inicioyregistro.LoginRequest
 import com.aristidevs.androidmaster.inicioyregistro.RegistroUsuarioRequest
 import com.aristidevs.androidmaster.inicioyregistro.RegistroUsuarioResponse
 import com.aristidevs.androidmaster.inicioyregistro.UsuarioResponse
+import com.aristidevs.androidmaster.principallectura.AgregarMetaRequest
+import com.aristidevs.androidmaster.principallectura.AgregarMetaResponse
+import com.aristidevs.androidmaster.principallectura.LecturaPendientesDataResponse
+import com.aristidevs.androidmaster.principallectura.ObtenerMetaDataResponse
 import com.aristidevs.androidmaster.serie.SerieListDataResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -62,7 +66,19 @@ interface ApiServiceManga {
     suspend fun agregarManga(@Body actualizar: EliminarYAgregarMangaRequest): Response<AgregarMangaResponse>
 
     @GET("/api/seriesdetalles/detalles/{id_usuario}/{id_serie}")
-    suspend fun searchDataSerie(@Path("id_usuario") idManga: String, @Path("id_serie") idUsuario: String): Response<DetalleSerieDataResponse>
+    suspend fun searchDataSerie(@Path("id_usuario") idUsuario: String, @Path("id_serie") idSerie: String): Response<DetalleSerieDataResponse>
+
+    @GET("/api/manga/lectura/{id_usuario}")
+    suspend fun searchDataLectura(@Path("id_usuario") idUsuario: String): Response<LecturaDataResponse>
+
+    @GET("/api/manga/pendientes/{id_usuario}")
+    suspend fun searchDataLecturaPendientes(@Path("id_usuario") idUsuario: String): Response<LecturaPendientesDataResponse>
+
+    @POST("/api/usuarios/actualizar-meta")
+    suspend fun actualizarMeta(@Body actualizar: AgregarMetaRequest): Response<AgregarMetaResponse>
+
+    @GET("/api/usuarios/lectura-meta/{id_usuario}")
+    suspend fun obtenerMeta(@Path("id_usuario") idUsuario: String): Response<ObtenerMetaDataResponse>
 
 
 

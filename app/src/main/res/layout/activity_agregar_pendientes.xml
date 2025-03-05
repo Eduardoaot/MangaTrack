@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".principallectura.agregarpendientes.AgregarPendientesActivity">
+
+    <TextView
+        android:id="@+id/Menu"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#5BA4F5"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@drawable/fondoredondo"
+        android:padding="5dp"
+        android:text="Mangas Pendientes"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="26sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#5BA4F5"
+        app:layout_constraintBottom_toBottomOf="@+id/Menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Menu"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <ImageView
+        android:id="@+id/btnflecha"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        android:backgroundTint="#5BA4F5"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/Menu"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecciona los mangas pendientes"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMangasPendientes"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnConfirmarSeleccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:backgroundTint="#5BA4F5"
+            android:text="Agregar"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppins_smibold"
+            android:stateListAnimator="@null"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:backgroundTint="@color/coleccionClaro"
+            android:text="Cancelar"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppins_smibold"
+            android:stateListAnimator="@null"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

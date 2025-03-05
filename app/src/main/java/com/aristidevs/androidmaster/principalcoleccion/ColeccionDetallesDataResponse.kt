@@ -1,4 +1,4 @@
-package com.aristidevs.androidmaster.coleccion
+package com.aristidevs.androidmaster.principalcoleccion
 
 import com.google.gson.annotations.SerializedName
 

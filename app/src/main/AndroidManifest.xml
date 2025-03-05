@@ -16,6 +16,12 @@
         android:theme="@style/Theme.AndroidMaster"
         tools:targetApi="31">
         <activity
+            android:name=".principallectura.agregarpendientes.AgregarPendientesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".principallectura.LecturaActivity"
+            android:exported="false" />
+        <activity
             android:name=".detallesserie.DetalleSerieActivity"
             android:exported="false" />
         <activity
@@ -42,7 +48,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".coleccion.ColeccionDetallesActivity"
+            android:name=".principalcoleccion.ColeccionDetallesActivity"
             android:exported="false" />
         <activity
             android:name=".serie.SerieListActivity"

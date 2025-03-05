@@ -241,7 +241,7 @@ class DetalleSerieActivity : AppCompatActivity() {
                                     if (response != null) {
                                         runOnUiThread {
                                             val detalles = response.resultadoDetalles
-                                            val todosLosMangasAgregados = true
+                                            val todosLosMangasAgregados = detalles.porcentajeMangaCompletado == 100f
 
                                             val listaFiltrada = if (todosLosMangasAgregados) {
                                                 detalles.detalleResultadoListaMnaga // Mostrar todos los mangas

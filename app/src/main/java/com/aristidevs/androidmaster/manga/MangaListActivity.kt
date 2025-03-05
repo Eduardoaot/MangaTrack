@@ -5,28 +5,18 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.aristidevs.androidmaster.R
-import com.aristidevs.androidmaster.coleccion.ColeccionDetallesActivity
 import com.aristidevs.androidmaster.databinding.ActivityMangaListBinding
 import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity
 import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion.MANGA_ID
 import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion.USER_ID
 import com.aristidevs.androidmaster.network.RetrofitClient
-import com.aristidevs.androidmaster.superheroapp.ApiService
-import com.aristidevs.androidmaster.superheroapp.SuperHeroDetailResponse
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MangaListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMangaListBinding

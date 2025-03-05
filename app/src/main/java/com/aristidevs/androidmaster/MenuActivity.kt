@@ -1,6 +1,5 @@
 package com.aristidevs.androidmaster
 
-import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,18 +7,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.Toast
 import com.aristidevs.androidmaster.buscador.BuscadorActivity
-import com.aristidevs.androidmaster.coleccion.ColeccionDetallesActivity
-import com.aristidevs.androidmaster.firstapp.FirstAppActivity
-import com.aristidevs.androidmaster.imccalculator.ImcCalculatorActivity
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion.USER_ID
+import com.aristidevs.androidmaster.principalcoleccion.ColeccionDetallesActivity
 import com.aristidevs.androidmaster.iniciosesion.InicioSesionMainActivity
-import com.aristidevs.androidmaster.manga.MangaListActivity
-import com.aristidevs.androidmaster.serie.SerieListActivity
-import com.aristidevs.androidmaster.settings.SettingsActivity
-import com.aristidevs.androidmaster.superheroapp.SuperHeroListActivity
-import com.aristidevs.androidmaster.todoapp.TodoActivity
-
+import com.aristidevs.androidmaster.principallectura.LecturaActivity
 
 
 class MenuActivity : AppCompatActivity() {
@@ -34,17 +26,25 @@ class MenuActivity : AppCompatActivity() {
         val btnColeccion = findViewById<Button>(R.id.btnColec)
         val searchViewMenu = findViewById<ImageButton>(R.id.searchViewMenu)
         val btnConfig = findViewById<Button>(R.id.btnConfig)
+        val btnLec = findViewById<Button>(R.id.btnLec)
 
 
         // Setear los listeners para los botones
         btnColeccion.setOnClickListener { navigateToColeccion(userId) }
         searchViewMenu.setOnClickListener { navigateToBuscador(userId) }
+        btnLec.setOnClickListener { navigateToLectura(userId) }
         btnConfig.setOnClickListener { cerrarSesion() }
     }
 
     private fun navigateToColeccion(userId: Int) {
         val intent = Intent(this, ColeccionDetallesActivity::class.java)
         intent.putExtra("USER_ID", userId) // Pasar el ID como un extra
+        startActivity(intent)
+    }
+
+    private fun navigateToLectura(userId: Int) {
+        val intent = Intent(this, LecturaActivity::class.java)
+        intent.putExtra(USER_ID, userId) // Pasar el ID como un extra
         startActivity(intent)
     }
 

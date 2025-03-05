@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/purple_200"/> <!-- Color blanco -->
+    <size android:width="30dp" android:height="30dp"/> <!-- Tamaño del CheckBox -->
+    <corners android:radius="20dp"/> <!-- Forma circular -->
+    <stroke android:color="#FFFFFF" android:width="2dp"/> <!-- Borde blanco -->
+</shape>
