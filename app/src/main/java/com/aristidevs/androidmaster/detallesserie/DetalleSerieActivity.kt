@@ -25,11 +25,9 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 
 class DetalleSerieActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityDetalleSerieBinding
     private lateinit var adapter: DetalleSerieAdapter
     private lateinit var retrofit: Retrofit
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,9 +67,9 @@ class DetalleSerieActivity : AppCompatActivity() {
             }
         )
         binding.rvMangasListaAAgregar.setHasFixedSize(true)
-        binding.rvMangasListaAAgregar.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvMangasListaAAgregar.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rvMangasListaAAgregar.adapter = adapter
-
 
     searchSerieDetails(idUsuario, idSerie)
     }
@@ -131,7 +129,6 @@ class DetalleSerieActivity : AppCompatActivity() {
                     }
 
                 }
-
             } else {
                 Log.e("DetalleSerie", "Error en la consulta: ${myResponse.code()}")
             }
@@ -293,7 +290,7 @@ class DetalleSerieActivity : AppCompatActivity() {
     }
 
     private fun navigateToDetail(id_manga: Int, id_usuario: Int) {
-        Log.d("NavigateToDetail", "ID serie: $id_manga")
+        Log.d("NavigateToDetail", "ID manga: $id_manga")
         Log.d("NavigateToDetail", "ID usuario: $id_usuario")
 
         val intent = Intent(this, DetalleMangaActivity::class.java)

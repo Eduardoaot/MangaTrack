@@ -52,6 +52,16 @@
                 android:textColor="@color/purple_200"
                 android:textSize="40sp" />
 
+            <TextView
+                android:id="@+id/txtNumeroFaltantes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="2+"
+                android:textColor="@color/Principal"
+                android:textSize="20sp" />
+
         </LinearLayout>
 
     </LinearLayout>

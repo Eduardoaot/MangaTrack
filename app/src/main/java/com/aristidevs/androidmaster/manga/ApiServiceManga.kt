@@ -18,6 +18,7 @@ import com.aristidevs.androidmaster.principallectura.AgregarMetaResponse
 import com.aristidevs.androidmaster.principallectura.LecturaPendientesDataResponse
 import com.aristidevs.androidmaster.principallectura.ObtenerMetaDataResponse
 import com.aristidevs.androidmaster.serie.SerieListDataResponse
+import com.aristidevs.androidmaster.principalperfil.PerfilDataResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -80,6 +81,7 @@ interface ApiServiceManga {
     @GET("/api/usuarios/lectura-meta/{id_usuario}")
     suspend fun obtenerMeta(@Path("id_usuario") idUsuario: String): Response<ObtenerMetaDataResponse>
 
-
+    @GET("/api/usuarios/perfil/{id_usuario}")
+    suspend fun obtenerPerfil(@Path("id_usuario") idUsuario: String): Response<PerfilDataResponse>
 
 }

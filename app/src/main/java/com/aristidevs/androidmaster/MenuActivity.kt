@@ -12,11 +12,11 @@ import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion
 import com.aristidevs.androidmaster.principalcoleccion.ColeccionDetallesActivity
 import com.aristidevs.androidmaster.iniciosesion.InicioSesionMainActivity
 import com.aristidevs.androidmaster.principallectura.LecturaActivity
+import com.aristidevs.androidmaster.principalpamodoru.PamodoruActivity
+import com.aristidevs.androidmaster.principalperfil.PerfilActivity
 
 
 class MenuActivity : AppCompatActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -25,19 +25,30 @@ class MenuActivity : AppCompatActivity() {
 
         val btnColeccion = findViewById<Button>(R.id.btnColec)
         val searchViewMenu = findViewById<ImageButton>(R.id.searchViewMenu)
-        val btnConfig = findViewById<Button>(R.id.btnConfig)
+        val btnPerfil = findViewById<Button>(R.id.btnPerfil)
         val btnLec = findViewById<Button>(R.id.btnLec)
+        val btnPamo = findViewById<Button>(R.id.btnPamo)
 
 
         // Setear los listeners para los botones
         btnColeccion.setOnClickListener { navigateToColeccion(userId) }
+
         searchViewMenu.setOnClickListener { navigateToBuscador(userId) }
         btnLec.setOnClickListener { navigateToLectura(userId) }
-        btnConfig.setOnClickListener { cerrarSesion() }
+
+        btnPamo.setOnClickListener { navigateToPamodoru(userId) }
+
+        btnPerfil.setOnClickListener { navigateToPerfil(userId) }
     }
 
     private fun navigateToColeccion(userId: Int) {
         val intent = Intent(this, ColeccionDetallesActivity::class.java)
+        intent.putExtra("USER_ID", userId) // Pasar el ID como un extra
+        startActivity(intent)
+    }
+
+    private fun navigateToPamodoru(userId: Int) {
+        val intent = Intent(this, PamodoruActivity::class.java)
         intent.putExtra("USER_ID", userId) // Pasar el ID como un extra
         startActivity(intent)
     }
@@ -54,24 +65,9 @@ class MenuActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun cerrarSesion() {
-        val sharedPreferences = getSharedPreferences("Sesion", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        // Eliminar los datos de sesión
-        editor.remove("sesionIniciada")  // Eliminar la bandera de sesión activa
-        editor.remove("userId")  // Eliminar el userId
-        editor.apply()  // Aplicar los cambios
-
-        // Log para confirmar que la sesión fue cerrada
-        Log.d("SesionStatus", "Sesión cerrada y datos eliminados.")
-
-        // Redirigir al usuario a la pantalla de inicio de sesión
-        val intent = Intent(this, InicioSesionMainActivity::class.java)
+    private fun navigateToPerfil(userId: Int) {
+        val intent = Intent(this, PerfilActivity::class.java)
+        intent.putExtra("USER_ID", userId) // Pasar el ID como un extra
         startActivity(intent)
-        finish()  // Finaliza la actividad actual para que no puedan volver
     }
-
-
-
 }

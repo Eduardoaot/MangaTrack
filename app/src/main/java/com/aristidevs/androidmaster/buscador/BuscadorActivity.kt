@@ -33,13 +33,10 @@ class BuscadorActivity : AppCompatActivity() {
         binding = ActivityBuscadorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userId = intent.getIntExtra("USER_ID", -1) // Obtén el userId si es necesario
+        val userId = intent.getIntExtra("USER_ID", -1)
         retrofit = RetrofitClient.getRetrofit()
 
         initUI(userId)  // Configura la UI
-
-        // Inicializa el adaptador y el RecyclerView
-
     }
 
     private fun initUI(userId: Int) {
@@ -47,7 +44,8 @@ class BuscadorActivity : AppCompatActivity() {
 
         adapter = BuscadorAdapter { navigateToDetail(it, userId) }
         binding.rvResutados.setHasFixedSize(true)
-        binding.rvResutados.layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+        binding.rvResutados.layoutManager =
+            GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         binding.rvResutados.adapter = adapter
 
         binding.btnflecha.setOnClickListener {
@@ -113,7 +111,5 @@ class BuscadorActivity : AppCompatActivity() {
         // Iniciar la actividad
         startActivity(intent)
     }
-
-
 
 }

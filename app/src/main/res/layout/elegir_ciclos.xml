@@ -3,61 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="center"
+    android:padding="24dp">
 
-    <!-- Texto informativo para la meta -->
     <TextView
-        android:id="@+id/txtMeta"
+        android:id="@+id/preguntaText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tu meta es de: 0"
-        android:fontFamily="@font/poppins_medium"
-        android:textSize="18sp"
+        android:text="¿Cuántos ciclos pamodoru deseas?"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="20dp"/>
 
-    <!-- EditText para que el usuario ingrese la meta -->
     <EditText
-        android:id="@+id/editMeta"
-        android:layout_width="match_parent"
+        android:id="@+id/ciclosInput"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:hint="Ingresa tu meta"
-        android:fontFamily="@font/poppins_medium"
+        android:hint="Introduce la cantidad de ciclos"
         android:inputType="number"
         android:textSize="16sp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/poppins_medium"
         android:padding="8dp"
         android:background="@drawable/edittext_background"/>
 
-    <!-- Texto informativo para los mangas leídos -->
-    <TextView
-        android:id="@+id/txtLeidos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_medium"
-        android:text="Llevas leídos: 0"
-        android:textSize="16sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- Botón para aplicar la meta -->
     <Button
-        android:id="@+id/btnAplicar"
+        android:id="@+id/enviarButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Aceptar"
         android:textSize="22sp"
         android:backgroundTint="#5BA4F5"
-        android:text="Aplicar meta"
         android:textAllCaps="false"
         android:fontFamily="@font/poppins_smibold"
         android:stateListAnimator="@null"
         android:textColor="#FFFFFF"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
-    <!-- Botón para cerrar el diálogo -->
     <Button
-        android:id="@+id/btnCerrar"
+        android:id="@+id/btnCancelarCiclos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="22sp"
@@ -68,4 +53,7 @@
         android:stateListAnimator="@null"
         android:textColor="#FFFFFF"
         android:textStyle="bold"/>
+
 </LinearLayout>
+
+

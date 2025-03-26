@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modifica la cantidad de tiempo:"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/ElegirTiempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Mas/Menos"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginBottom="24dp" />
+
+    <RadioGroup
+        android:id="@+id/minutoGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/min01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_smibold"
+            android:textSize="12sp"
+            android:text=" 1 min"/>
+
+        <RadioButton
+            android:id="@+id/min05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_smibold"
+            android:textSize="12sp"
+            android:text=" 5 min"/>
+
+    <RadioButton
+        android:id="@+id/min10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_smibold"
+        android:textSize="12sp"
+        android:text="10 min"/>
+
+    <RadioButton
+        android:id="@+id/min30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_smibold"
+        android:textSize="12sp"
+        android:text="30 min"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/Aceptar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aceptar"
+        android:textSize="22sp"
+        android:backgroundTint="#5BA4F5"
+        android:textAllCaps="false"
+        android:fontFamily="@font/poppins_smibold"
+        android:stateListAnimator="@null"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp" />
+
+    <Button
+        android:id="@+id/btnCancelarTiempos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:backgroundTint="@color/coleccionClaro"
+        android:text="Cancelar"
+        android:textAllCaps="false"
+        android:fontFamily="@font/poppins_smibold"
+        android:stateListAnimator="@null"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
+</LinearLayout>
+

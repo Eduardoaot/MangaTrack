@@ -11,8 +11,15 @@
     <color name="gray">#808080</color>
     <color name="green">#7ed957</color>
     <color name="Principal">#5BA4F5</color>
+    <color name="PrincipalOscuro">#4287F5</color>
+    <color name="PrincipalClaro">#b9d9f3</color>
     <color name="lecturaClaro">#e5d0ff</color>
+    <color name="lecturaOscuro">#B142FF</color>
     <color name="coleccionClaro">#b9d9f3</color>
+
+    <color name="gris">#B5B2B2</color>
+    <color name="lila">#D292FD</color>
+    <color name="blue2">#0C357A</color>
 
 
 

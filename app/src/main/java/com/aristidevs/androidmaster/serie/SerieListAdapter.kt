@@ -22,7 +22,8 @@ class SerieListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SerieListHolder {
         return SerieListHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_serielist, parent, false)
+            LayoutInflater.from(parent.context).
+            inflate(R.layout.item_serielist, parent, false)
         )
     }
 

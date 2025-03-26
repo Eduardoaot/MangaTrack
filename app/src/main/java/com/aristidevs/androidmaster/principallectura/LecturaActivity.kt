@@ -39,12 +39,9 @@ import retrofit2.Retrofit
 
 
 class LecturaActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityLecturaBinding // Cambia al binding correcto
     private lateinit var retrofit: Retrofit
     private lateinit var adapter: LecturaAdapter
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLecturaBinding.inflate(layoutInflater) // Infla el binding
@@ -97,16 +94,13 @@ class LecturaActivity : AppCompatActivity() {
             .setTitle("Confirmar") // Título del diálogo
             .setMessage("¿Ya leyó este manga?") // Mensaje del diálogo
             .setPositiveButton("Aceptar") { dialog, which ->
-                // Si el usuario presiona "Aceptar", llamamos a la función cambiarAEstadoPendiente
                 cambiarAEstadoLeido(idManga, idUsuario)
             }
             .setNegativeButton("Cancelar") { dialog, which ->
-                // Si el usuario presiona "Cancelar", simplemente cerramos el diálogo
                 dialog.dismiss()
             }
             .create()
 
-        // Mostrar el diálogo
         alertDialog.show()
     }
 
@@ -149,8 +143,6 @@ class LecturaActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             .create()
-
-        // Mostrar el diálogo
         alertDialog.show()
     }
 
@@ -201,7 +193,10 @@ class LecturaActivity : AppCompatActivity() {
                     Log.i("aristidevs", "Response data: $response")  // Log de toda la respuesta
                     val lecturaData = response.lecturaDataTotal
                     // Log para ver los detalles específicos de la lecturaData
-                    Log.i("aristidevs", "Lectura Data: Total leídos: ${lecturaData.mangasLeidosTot}, Total leídos este año: ${lecturaData.mangasLeidosAnio}, Total leídos este mes: ${lecturaData.mangasLeidosMes}")
+                    Log.i("aristidevs", "Lectura Data: Total leídos: " +
+                            "${lecturaData.mangasLeidosTot}, Total leídos este año: " +
+                            "${lecturaData.mangasLeidosAnio}, Total leídos este mes: " +
+                            "${lecturaData.mangasLeidosMes}")
 
                     // Actualiza los valores de los TextViews con la data recibida
                     runOnUiThread {
@@ -209,7 +204,8 @@ class LecturaActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                Log.i("aristidevs", "Error en la petición: ${myResponse.code()} - ${myResponse.message()}")
+                Log.i("aristidevs", "Error en la petición: ${myResponse.code()} - " +
+                        "${myResponse.message()}")
                 runOnUiThread {
 
                     // Mostrar un mensaje de error, si lo deseas
@@ -231,7 +227,10 @@ class LecturaActivity : AppCompatActivity() {
                     Log.i("aristidevs", "Response data: $response")  // Log de toda la respuesta
                     val lecturaData = response.lecturaDataTotal
                     // Log para ver los detalles específicos de la lecturaData
-                    Log.i("aristidevs", "Lectura Data: Total leídos: ${lecturaData.mangasLeidosTot}, Total leídos este año: ${lecturaData.mangasLeidosAnio}, Total leídos este mes: ${lecturaData.mangasLeidosMes}")
+                    Log.i("aristidevs", "Lectura Data: Total leídos: " +
+                            "${lecturaData.mangasLeidosTot}, Total leídos este año: " +
+                            "${lecturaData.mangasLeidosAnio}, Total leídos este mes: " +
+                            "${lecturaData.mangasLeidosMes}")
 
                     // Actualiza los valores de los TextViews con la data recibida
                     runOnUiThread {
@@ -240,13 +239,15 @@ class LecturaActivity : AppCompatActivity() {
                         binding.NumeroTotalLeidosMes.text = lecturaData.mangasLeidosMes.toString()
 
 
-                        setupBarChart(lecturaData.months, lecturaData.mangasAniadidos, lecturaData.mangasLeidos)
+                        setupBarChart(lecturaData.months,
+                            lecturaData.mangasAniadidos, lecturaData.mangasLeidos)
                         // Actualiza el RecyclerView con la lista de mangas sin leer
                         adapter.updateList(lecturaData.listaMangasSinLeer)
                     }
                 }
             } else {
-                Log.i("aristidevs", "Error en la petición: ${myResponse.code()} - ${myResponse.message()}")
+                Log.i("aristidevs", "Error en la petición: " +
+                        "${myResponse.code()} - ${myResponse.message()}")
                 runOnUiThread {
 
                     // Mostrar un mensaje de error, si lo deseas
@@ -273,12 +274,15 @@ class LecturaActivity : AppCompatActivity() {
                 if (response != null) {
                     runOnUiThread {
                         // Actualizamos los TextViews con los datos de la respuesta
-                        dialogView.findViewById<TextView>(R.id.txtMeta).text = "Tu meta es de: ${response.mangasLeidosMes}"
-                        dialogView.findViewById<TextView>(R.id.txtLeidos).text = "Llevas leídos: ${response.mangasLeidosTot}"
+                        dialogView.findViewById<TextView>(R.id.txtMeta).text =
+                            "Tu meta es de: ${response.mangasLeidosMes}"
+                        dialogView.findViewById<TextView>(R.id.txtLeidos).text =
+                            "Llevas leídos: ${response.mangasLeidosTot}"
                     }
                 }
             } else {
-                Log.i("aristidevs", "Error en la petición: ${myResponse.code()} - ${myResponse.message()}")
+                Log.i("aristidevs", "Error en la petición: " +
+                        "${myResponse.code()} - ${myResponse.message()}")
                 runOnUiThread {
                 }
             }
@@ -286,7 +290,8 @@ class LecturaActivity : AppCompatActivity() {
     }
 
     private fun AgregarMeta(idUsuario: Int) {
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_meta, null)
+        val dialogView = LayoutInflater.from(this).
+        inflate(R.layout.dialog_meta, null)
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
@@ -300,7 +305,8 @@ class LecturaActivity : AppCompatActivity() {
         btnAplicar.setOnClickListener {
             val meta = metaEditText.text.toString()
             if (meta.isNotEmpty()) {
-                Toast.makeText(applicationContext, "Meta actualizada exitosamente", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,
+                    "Meta actualizada exitosamente", Toast.LENGTH_SHORT).show()
                 actualizarMeta(idUsuario, meta)
             } else {
                 showToast("Por favor, ingresa una meta válida.")
@@ -313,9 +319,6 @@ class LecturaActivity : AppCompatActivity() {
 
         dialog.show()
     }
-
-
-
 
     // Método para mostrar un Toast
     private fun showToast(message: String) {
@@ -336,13 +339,16 @@ class LecturaActivity : AppCompatActivity() {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         runOnUiThread {
-                            Toast.makeText(applicationContext, "Meta actualizada exitosamente", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext,
+                                "Meta actualizada exitosamente", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else {
-                    Log.e("aristidevs", "Error al actualizar la meta: ${response.code()} - ${response.message()}")
+                    Log.e("aristidevs",
+                        "Error al actualizar la meta: ${response.code()} - ${response.message()}")
                     runOnUiThread {
-                        Toast.makeText(applicationContext, "Error al actualizar la meta", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,
+                            "Error al actualizar la meta", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
@@ -365,11 +371,12 @@ class LecturaActivity : AppCompatActivity() {
         val entriesLeidos = mutableListOf<BarEntry>()
 
         for (i in months.indices) {
-            entriesAnadidos.add(BarEntry(i.toFloat() - 0.2f, mangasAnadidos[i].toFloat())) // Mangas añadidos (desplazados a la izquierda)
-            entriesLeidos.add(BarEntry(i.toFloat() + 0.2f, mangasLeidos[i].toFloat()))     // Mangas leídos (desplazados a la derecha)
+            entriesAnadidos.
+            add(BarEntry(i.toFloat() - 0.2f, mangasAnadidos[i].toFloat()))
+            entriesLeidos.
+            add(BarEntry(i.toFloat() + 0.2f, mangasLeidos[i].toFloat()))
         }
 
-        // Crear los conjuntos de datos
         val dataSetAnadidos = BarDataSet(entriesAnadidos, "").apply {
             color = Color.parseColor("#5BA4F5") // Color azul para mangas añadidos
             setDrawValues(false) // Ocultar valores encima de las barras
@@ -409,17 +416,10 @@ class LecturaActivity : AppCompatActivity() {
                 setDrawAxisLine(false)  // Ocultar la línea del eje Y
                 setDrawLabels(false)    // Ocultar etiquetas del eje Y
             }
-
-            // Deshabilitar el eje Y derecho
             axisRight.isEnabled = false
-
-            // Deshabilitar la leyenda
             legend.isEnabled = false
-
-            // Deshabilitar la descripción
             description.isEnabled = false
 
-            // Desactivar el zoom
             setPinchZoom(false)
             isScaleXEnabled = false
             isScaleYEnabled = false

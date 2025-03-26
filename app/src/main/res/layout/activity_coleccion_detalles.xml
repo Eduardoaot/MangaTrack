@@ -192,10 +192,10 @@
                 />
 
             <TextView
-                android:layout_width="190dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/fondoredondo2"
-                android:text=" Mis Series "
+                android:text="  Mis Series  "
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -294,10 +294,10 @@
 
             <TextView
                 android:id="@+id/text_comics_agregados"
-                android:layout_width="190dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/fondoredondo2"
-                android:text=" Cómics Agregados"
+                android:text="  Cómics Agregados  "
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"

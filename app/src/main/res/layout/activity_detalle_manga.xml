@@ -63,7 +63,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnMarcarLeido"
         app:layout_constraintHorizontal_bias="0.803"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@mipmap/pomcheack"/>
+        app:srcCompat="@mipmap/pom"/>
 
     <TextView
         android:id="@+id/txtTituloMangaYnum"
@@ -144,20 +144,31 @@
         app:layout_constraintTop_toBottomOf="@+id/txtTituloMangaYnum" />
 
 
-    <TextView
-        android:id="@+id/txtDescripcion"
-        android:layout_width="370dp"
-        android:layout_height="160dp"
-        android:fontFamily="@font/poppins_medium"
-        android:justificationMode="inter_word"
-        android:text="Este manga esta bien chido"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/autorTextView"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <TextView
+            android:id="@+id/txtDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:justificationMode="inter_word"
+            android:scrollHorizontally="false"
+            android:text="Este manga esta bien chido"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.core.widget.NestedScrollView>
+
 
     <TextView
+        android:id="@+id/autorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Autor:"

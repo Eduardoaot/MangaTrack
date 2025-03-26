@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selecciona el tiempo:"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/ElegirTiempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pamodoro"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginBottom="24dp" />
+
+    <RadioGroup
+        android:id="@+id/pomodoroGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/pomo20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_smibold"
+            android:text="20 min"/>
+
+        <RadioButton
+            android:id="@+id/pomo25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_smibold"
+            android:text="25 min"/>
+
+        <RadioButton
+            android:id="@+id/pomo30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_smibold"
+            android:text="30 min"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewDescanso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descanso:"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp" />
+
+    <RadioGroup
+        android:id="@+id/descansoGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/desc5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_smibold"
+            android:text=" 5 min"/>
+
+        <RadioButton
+            android:id="@+id/desc10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_smibold"
+            android:text="10 min"/>
+
+        <RadioButton
+            android:id="@+id/desc15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_smibold"
+            android:text="15 min"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/Aceptar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aceptar"
+        android:textSize="22sp"
+        android:backgroundTint="#5BA4F5"
+        android:textAllCaps="false"
+        android:fontFamily="@font/poppins_smibold"
+        android:stateListAnimator="@null"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp" />
+
+    <Button
+        android:id="@+id/btnCancelarPamodoru"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:backgroundTint="@color/coleccionClaro"
+        android:text="Cancelar"
+        android:textAllCaps="false"
+        android:fontFamily="@font/poppins_smibold"
+        android:stateListAnimator="@null"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
+</LinearLayout>
+

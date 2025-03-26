@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/Menu"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="#5BA4F5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -164,13 +164,13 @@
         android:elevation="5dp"/>
 
     <Button
-        android:id="@+id/btnConfig"
+        android:id="@+id/btnPerfil"
         android:layout_width="247dp"
         android:layout_height="51dp"
         android:textSize="22sp"
         android:layout_marginTop="40dp"
         android:backgroundTint="#5BA4F5"
-        android:text="    Cerrar sesión"
+        android:text="    Perfil"
         android:textAllCaps="false"
         android:fontFamily="@font/poppins_smibold"
         android:stateListAnimator="@null"

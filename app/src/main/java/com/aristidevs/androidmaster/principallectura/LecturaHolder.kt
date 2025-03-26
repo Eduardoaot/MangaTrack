@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso
 
 class LecturaHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    private val binding = ItemLecturaDetalleBinding.bind(view)
+    internal val binding = ItemLecturaDetalleBinding.bind(view)
 
     fun bind(
         listaMangaSerieItemResponse: ItemMangaSinLeer,

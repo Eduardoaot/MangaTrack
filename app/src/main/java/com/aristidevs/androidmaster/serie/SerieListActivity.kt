@@ -56,7 +56,8 @@ class SerieListActivity : AppCompatActivity() {
         adapter = SerieListAdapter { navigateToDetail(it, userId.toInt()) }
         binding.rvSerieList.setHasFixedSize(true)
         binding.rvSerieList.layoutManager =
-            GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+            GridLayoutManager(this, 1,
+                GridLayoutManager.VERTICAL, false)
         binding.rvSerieList.adapter = adapter
 
         binding.searchViewSerie.setIconifiedByDefault(false)  // No muestra el icono solo como una lupa
@@ -72,28 +73,24 @@ class SerieListActivity : AppCompatActivity() {
                     // Si el campo de búsqueda está vacío, se realiza la búsqueda por ID
                     searchByID(userId)
                 } else {
-                    // Si hay texto, realiza la búsqueda por nombre
                     searchSerieByName(query, userId)
                 }
                 return true // Indica que el evento fue manejado
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Cuando el texto en el SearchView cambia
                 if (newText.isNullOrEmpty()) {
-                    // Si el texto está vacío (por ejemplo, el usuario hizo clic en la "X")
                     searchByID(userId)
                 }
-                return true // Indica que el evento fue manejado
+                return true
             }
         })
     }
 
-
     private fun searchByID(id: String){
         binding.progressBar.isVisible = true
         CoroutineScope(Dispatchers.IO).launch {
-            val myResponse = retrofit.create(ApiServiceManga::class.java).searchSerieById(id) // Cambia a `getMangaByID`
+            val myResponse = retrofit.
+            create(ApiServiceManga::class.java).searchSerieById(id) // Cambia a `getMangaByID`
             if(myResponse.isSuccessful){
                 Log.i("aristidevs", "Funciona")
                 val response: SerieListDataResponse? = myResponse.body()
@@ -112,7 +109,8 @@ class SerieListActivity : AppCompatActivity() {
     private fun searchSerieByName(name: String, userId: String) {
         binding.progressBar.isVisible = true
         CoroutineScope(Dispatchers.IO).launch {
-            val myResponse = retrofit.create(ApiServiceManga::class.java).searchSerieById(userId)
+            val myResponse = retrofit.
+            create(ApiServiceManga::class.java).searchSerieById(userId)
             if (myResponse.isSuccessful) {
                 val response: SerieListDataResponse? = myResponse.body()
                 runOnUiThread {

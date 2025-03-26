@@ -44,7 +44,6 @@ class SerieListHolder(view: View): RecyclerView.ViewHolder(view) {
                 binding.pbSerieProgress.visibility = View.VISIBLE
             }
         }
-
         binding.ibActionButton.setOnClickListener { onItemSelected(serieListaItemResponse.serieId.toInt()) }
     }
 

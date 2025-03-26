@@ -81,6 +81,35 @@ class InicioSesionActivity : AppCompatActivity() {
     }
 
     private fun registrarUsuario(nombre: String, email: String, usuario: String, contrasena: String) {
+        // Validar todos los campos
+        if (!esEmailValido(email)) {
+            runOnUiThread {
+                Toast.makeText(this@InicioSesionActivity, "Correo inválido. Introduce un correo electrónico válido.", Toast.LENGTH_SHORT).show()
+            }
+            return
+        }
+
+        if (!esNombreValido(nombre)) {
+            runOnUiThread {
+                Toast.makeText(this@InicioSesionActivity, "El nombre debe tener al menos 3 caracteres.", Toast.LENGTH_SHORT).show()
+            }
+            return
+        }
+
+        if (!esUsuarioValido(usuario)) {
+            runOnUiThread {
+                Toast.makeText(this@InicioSesionActivity, "El nombre de usuario debe tener al menos 3 caracteres.", Toast.LENGTH_SHORT).show()
+            }
+            return
+        }
+
+        if (!esContrasenaValida(contrasena)) {
+            runOnUiThread {
+                Toast.makeText(this@InicioSesionActivity, "La contraseña debe tener al menos 6 caracteres y contener una letra mayúscula, un número y un carácter especial.", Toast.LENGTH_SHORT).show()
+            }
+            return
+        }
+
         CoroutineScope(Dispatchers.IO).launch {
             val nuevoUsuario = RegistroUsuarioRequest(nombre, email, usuario, contrasena, 0)
             val myResponse = retrofit.create(ApiServiceManga::class.java).registrarUsuario(nuevoUsuario)
@@ -105,6 +134,30 @@ class InicioSesionActivity : AppCompatActivity() {
             }
         }
     }
+
+    // Función para validar si el correo tiene un formato válido
+    private fun esEmailValido(email: String): Boolean {
+        val regex = "^[A-Za-z0-9+_.-]+@(.+)$"
+        return email.matches(Regex(regex))
+    }
+
+    // Función para validar el nombre
+    private fun esNombreValido(nombre: String): Boolean {
+        return nombre.length >= 3
+    }
+
+    // Función para validar el nombre de usuario
+    private fun esUsuarioValido(usuario: String): Boolean {
+        return usuario.length >= 3
+    }
+
+    // Función para validar la contraseña
+    private fun esContrasenaValida(contrasena: String): Boolean {
+        val regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?\":{}|<>]).{6,}$"
+        return contrasena.matches(Regex(regex))
+    }
+
+
 
     private fun autenticarUsuario(email: String, contrasena: String) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -184,7 +237,6 @@ class InicioSesionActivity : AppCompatActivity() {
         return sharedPreferences.getBoolean("sesionIniciada", false)
     }
 
-    // Guardar el ID del usuario y el estado de la sesión
     private fun guardarSesion(userId: Int) {
         val sharedPreferences = getSharedPreferences("Sesion", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -193,7 +245,6 @@ class InicioSesionActivity : AppCompatActivity() {
         editor.apply()
     }
 
-    // Obtener el ID del usuario guardado
     private fun obtenerUserId(): Int? {
         val sharedPreferences = getSharedPreferences("Sesion", Context.MODE_PRIVATE)
         return sharedPreferences.getInt("userId", -1).takeIf { it != -1 }

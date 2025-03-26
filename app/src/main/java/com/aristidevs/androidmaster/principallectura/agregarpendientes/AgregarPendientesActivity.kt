@@ -43,14 +43,13 @@ class AgregarPendientesActivity : AppCompatActivity() {
             // Realizar la acción de volver atrás
             onBackPressedDispatcher.onBackPressed()
         }
-
         initUI(id_usuario)
-
     }
 
     private fun initUI(idUsuario: Int) {
         adapter = MangasPendientesAdapter()
-        binding.recyclerViewMangasPendientes.layoutManager = GridLayoutManager(this, 3) // 3 columnas
+        binding.recyclerViewMangasPendientes.layoutManager =
+            GridLayoutManager(this, 3) // 3 columnas
         binding.recyclerViewMangasPendientes.setHasFixedSize(true) // Si las vistas no cambian de tamaño, esto mejora rendimiento
         binding.recyclerViewMangasPendientes.adapter = adapter
 
@@ -99,8 +98,6 @@ class AgregarPendientesActivity : AppCompatActivity() {
         }
 
     }
-
-
 
     private fun searchDataPendientes(idUsuario: Int) {
         CoroutineScope(Dispatchers.IO).launch {

@@ -23,14 +23,10 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 
 class ColeccionDetallesActivity : AppCompatActivity() {
-
-
     private lateinit var binding: ActivityColeccionDetallesBinding
     private lateinit var retrofit: Retrofit
     private lateinit var adapter: MangaListAdapter
     private var db = FirebaseFirestore.getInstance()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityColeccionDetallesBinding.inflate(layoutInflater)
@@ -59,7 +55,6 @@ class ColeccionDetallesActivity : AppCompatActivity() {
         }
     }
 
-
     private fun initUI(userId: Int) {
         binding.rvMangaListColeccion.isVisible = false
         binding.txtTotalComics.isVisible = false
@@ -74,11 +69,11 @@ class ColeccionDetallesActivity : AppCompatActivity() {
         binding.comicsagregados.isVisible = false
         binding.progressBarCarga.isVisible = true // Mostrar el ProgressBar
 
-
         adapter = MangaListAdapter { navigateToDetail(it, userId.toInt()) }
         binding.rvMangaListColeccion.setHasFixedSize(true)
         binding.rvMangaListColeccion.layoutManager =
-            GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            GridLayoutManager(this, 1,
+                GridLayoutManager.HORIZONTAL, false)
         binding.rvMangaListColeccion.adapter = adapter
         binding.btnActivitySerieList.setOnClickListener {
             navigateToSerieList(userId.toInt())  // Navegar a la actividad de Series
@@ -89,7 +84,6 @@ class ColeccionDetallesActivity : AppCompatActivity() {
 
         searchMangaByID(userId.toString())
         searchColeccionByID(userId.toString())
-
     }
 
     private fun navigateToMangaList(id: Int) {
@@ -148,7 +142,6 @@ class ColeccionDetallesActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun searchMangaByID(id: String) {
         binding.progressBarColeccion.isVisible = true

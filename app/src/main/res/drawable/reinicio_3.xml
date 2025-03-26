@@ -1,0 +1,18 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo -->
+    <item>
+        <shape  android:shape="oval">
+            <solid android:color="@color/lecturaOscuro" />
+            <size android:width="30dp" android:height="30dp"/>
+        </shape>
+    </item>
+
+    <!-- Cuadrado blanco en el centro -->
+    <item android:left="9dp" android:top="9dp" android:right="9dp" android:bottom="9dp">
+        <shape>
+            <solid android:color="@android:color/white"/>
+            <size android:width="13dp" android:height="13dp"/>
+        </shape>
+    </item>
+</layer-list>
+

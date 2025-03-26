@@ -26,13 +26,11 @@ class MangaListActivity : AppCompatActivity() {
 
     private var db = FirebaseFirestore.getInstance()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMangaListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         retrofit = RetrofitClient.getRetrofit()
-
 
         val userId = intent.getIntExtra("USER_ID", -1)
 
@@ -42,7 +40,6 @@ class MangaListActivity : AppCompatActivity() {
             initUI(userId.toString())
         }
 
-        // Agregar botón de flecha
         binding.btnflecha.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
@@ -61,7 +58,8 @@ class MangaListActivity : AppCompatActivity() {
         adapter = MangaListAdapter { navigateToDetail(it, userId.toInt()) }
         binding.rvMangaList.setHasFixedSize(true)
         binding.rvMangaList.layoutManager =
-            GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
+            GridLayoutManager(this, 3,
+                GridLayoutManager.VERTICAL, false)
         binding.rvMangaList.adapter = adapter
 
         binding.searchView.setIconifiedByDefault(false)
@@ -129,7 +127,8 @@ class MangaListActivity : AppCompatActivity() {
                 runOnUiThread {
                     if (response != null) {
                         // Filtrar por serieNom que coincida con el nombre ingresado
-                        val filteredList = response.mangaLista.filter { it.serieNom.contains(name, ignoreCase = true) }
+                        val filteredList = response.
+                        mangaLista.filter { it.serieNom.contains(name, ignoreCase = true) }
                         adapter.updateList(filteredList)
                     }
                     binding.progressBar.isVisible = false

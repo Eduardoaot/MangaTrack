@@ -38,15 +38,14 @@ class BuscadorDetallesActivity : AppCompatActivity() {
             // Acción para regresar a la actividad anterior utilizando onBackPressedDispatcher
             onBackPressedDispatcher.onBackPressed()
         }
-
-
     }
 
     private fun initUI(name: String, id: Int) {
 
         adapter = BuscadorDetallesAdapter { navigateToDetail(it, id) }
         binding.rvResutados.setHasFixedSize(true)
-        binding.rvResutados.layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+        binding.rvResutados.layoutManager =
+            GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         binding.rvResutados.adapter = adapter
 
         binding.txtBusqueda.text = name
