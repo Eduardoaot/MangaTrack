@@ -12,11 +12,11 @@
     <TextView
         android:id="@+id/Menu"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="91dp"
         android:background="#5BA4F5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <ImageView
         android:id="@+id/searchIcon"
@@ -227,38 +227,34 @@
         android:id="@+id/BC"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="155dp"
+        android:layout_marginTop="85dp"
         android:backgroundTint="#D9D9D9"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.208"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Menu"
+        app:layout_constraintTop_toBottomOf="@+id/Menu"
         app:srcCompat="@mipmap/coleccion"
         android:elevation="5dp"/>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="@id/Menu"
+        app:layout_constraintEnd_toStartOf="@id/imageView2"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/Menu"
+        app:layout_constraintTop_toTopOf="@id/Menu"
+        app:srcCompat="@mipmap/logo" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="254dp"
         android:layout_height="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/Menu"
-        app:layout_constraintEnd_toEndOf="@+id/Menu"
-        app:layout_constraintHorizontal_bias="0.732"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.565"
+        app:layout_constraintBottom_toBottomOf="@id/Menu"
+        app:layout_constraintEnd_toEndOf="@id/Menu"
+        app:layout_constraintStart_toEndOf="@id/imageView3"
+        app:layout_constraintTop_toTopOf="@id/Menu"
         app:srcCompat="@mipmap/mangatrack" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="98dp"
-        android:layout_height="103dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/searchViewMenu"
-        app:layout_constraintEnd_toEndOf="@+id/Menu"
-        app:layout_constraintHorizontal_bias="0.134"
-        app:layout_constraintStart_toStartOf="@+id/Menu"
-        app:srcCompat="@mipmap/logo" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

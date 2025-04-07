@@ -18,9 +18,9 @@ class MangaListHolder(view: View) : RecyclerView.ViewHolder(view) {
         } else {
             mangaNum.toString() // Si tiene decimales, lo mostramos completo
         }
-
         binding.root.setOnClickListener {onItemSelected(mangaListaItemResponse.mangaId)}
         binding.tvMangaListNumber.text = mangaNumText
         Picasso.get().load(mangaListaItemResponse.mangaImg).into(binding.ivMangaListImage)
+
     }
 }

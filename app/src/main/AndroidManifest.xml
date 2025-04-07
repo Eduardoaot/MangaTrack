@@ -15,73 +15,88 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidMaster"
         tools:targetApi="31">
-
-        <!-- Bloquear orientación en todas las actividades -->
-
+        <activity
+            android:name=".principalmonetario.MonetarioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".principalpresupuestos.bolsa.BolsaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".principalpresupuestos.detallepresupuesto.DetallePresupuestoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".principalpresupuestos.guardados.GuardadosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".principalpresupuestos.presupuestos.PresupuestosActivity"
+            android:exported="false" /> <!-- Bloquear orientación en todas las actividades -->
         <activity
             android:name=".principalperfil.PerfilActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".principalpamodoru.PamodoruActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".principallectura.agregarpendientes.AgregarPendientesActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".principallectura.LecturaActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".detallesserie.DetalleSerieActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".detallesmanga.DetalleMangaActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".buscador.BuscadorDetallesActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".buscador.BuscadorActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".iniciosesion.InicioSesionMainActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".principalcoleccion.ColeccionDetallesActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".serie.SerieListActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".manga.MangaListActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MenuActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".inicioyregistro.InicioSesionActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
+
 </manifest>

@@ -8,7 +8,7 @@ import com.aristidevs.androidmaster.manga.ListaMangaSerieItemResponse
 
 
 class DetalleSerieAdapter(
-    private var detalleResultadoListaMnaga: List<ListaMangaSerieItemResponse> = emptyList(),
+    var detalleResultadoListaMnaga: List<ListaMangaSerieItemResponse> = emptyList(),
     private val onItemSelected: (Int) -> Unit,
     private val onAddOrRemove: (Int, Boolean) -> Unit,
     private var todosLosMangasAgregados: Boolean = false // Nuevo parámetro
@@ -28,10 +28,10 @@ class DetalleSerieAdapter(
     }
 
     override fun onBindViewHolder(viewholder: DetalleSerieHolder, position: Int) {
-        // Pasar "todosLosMangasAgregados" al ViewHolder
         viewholder.bind(detalleResultadoListaMnaga[position], onItemSelected, onAddOrRemove, todosLosMangasAgregados)
     }
 
     override fun getItemCount() = detalleResultadoListaMnaga.size
 }
+
 

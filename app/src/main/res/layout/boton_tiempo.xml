@@ -51,21 +51,21 @@
             android:textSize="12sp"
             android:text=" 5 min"/>
 
-    <RadioButton
-        android:id="@+id/min10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_smibold"
-        android:textSize="12sp"
-        android:text="10 min"/>
+        <RadioButton
+            android:id="@+id/min10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_smibold"
+            android:textSize="12sp"
+            android:text="10 min"/>
 
-    <RadioButton
-        android:id="@+id/min30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_smibold"
-        android:textSize="12sp"
-        android:text="30 min"/>
+        <RadioButton
+            android:id="@+id/min30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_smibold"
+            android:textSize="12sp"
+            android:text="30 min"/>
 
     </RadioGroup>
 

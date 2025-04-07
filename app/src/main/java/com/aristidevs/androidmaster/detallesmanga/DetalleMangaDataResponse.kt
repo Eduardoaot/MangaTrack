@@ -14,5 +14,6 @@ data class DetalleMangaItemResponse(
     @SerializedName("descripcion") val mangaDesc: String,
     @SerializedName("nombreAutor") val serieAut: String,
     @SerializedName("imagenManga") val mangaImg: String,
+    @SerializedName("precioManga") val precio: Float,
     @SerializedName("estadoAgregado") val estadoAgregado: Long
 )

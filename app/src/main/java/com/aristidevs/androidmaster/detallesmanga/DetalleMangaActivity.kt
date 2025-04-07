@@ -1,26 +1,23 @@
 package com.aristidevs.androidmaster.detallesmanga
 
-import android.content.res.ColorStateList
-import android.graphics.Color
+import android.content.Context
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.aristidevs.androidmaster.R
-import com.aristidevs.androidmaster.databinding.ActivityBuscadorDetallesBinding
 import com.aristidevs.androidmaster.databinding.ActivityDetalleMangaBinding
-import com.aristidevs.androidmaster.databinding.ActivityInicioSesionBinding
 import com.aristidevs.androidmaster.manga.ApiServiceManga
 import com.aristidevs.androidmaster.network.RetrofitClient
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 
 class DetalleMangaActivity : AppCompatActivity() {
@@ -28,9 +25,12 @@ class DetalleMangaActivity : AppCompatActivity() {
         const val SERIE_ID = "serie_id"
         const val USER_ID = "user_id"
         const val MANGA_ID = "manga_id"
+        const val PLAN_ID = "plan_id"
     }
     private lateinit var binding: ActivityDetalleMangaBinding
     private lateinit var retrofit: Retrofit
+    private var precio: Float? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetalleMangaBinding.inflate(layoutInflater)
@@ -54,10 +54,33 @@ class DetalleMangaActivity : AppCompatActivity() {
         binding.btnMarcarLeido.setOnClickListener {
             MarcarLeido(id_manga, id_usuario, imagenLectura)
         }
-
         binding.btnAgregarManga.setOnClickListener {
-            AgregarManga(id_manga,id_usuario)
+            mostrarDialogoAgregarManga(this) { precioIngresado ->
+                when (precioIngresado) {
+                    -1f -> {
+                        // Regalado: Llamar a la función con precio en 0
+                        Toast.makeText(this, "El manga fue regalado", Toast.LENGTH_SHORT).show()
+                        AgregarManga(id_manga, id_usuario, precio ?: 0f)
+                    }
+                    0f -> {
+                        // No sé: El precio es 0
+                        precio = 0f
+                        Toast.makeText(this, "Precio desconocido, asignado 0", Toast.LENGTH_SHORT).show()
+                        AgregarManga(id_manga, id_usuario, 0f)
+                    }
+                    else -> {
+                        // Verificar que `precio` no sea null antes de hacer la resta
+                        val diferenciaPrecio = (precio ?: 0f) - precioIngresado
+                        Toast.makeText(this, "Precio ingresado: $precioIngresado\nDiferencia: $diferenciaPrecio", Toast.LENGTH_SHORT).show()
+
+                        // Llamamos a AgregarManga con la diferencia
+                        AgregarManga(id_manga, id_usuario, diferenciaPrecio)
+                    }
+                }
+            }
         }
+
+
 
         binding.botonEliminarManga.setOnClickListener {
             EliminarManga(id_manga, id_usuario)
@@ -91,9 +114,35 @@ class DetalleMangaActivity : AppCompatActivity() {
         }
     }
 
-    private fun AgregarManga(idManga: Int, idUsuario: Int) {
+    fun mostrarDialogoAgregarManga(context: Context, onPrecioIngresado: (Float) -> Unit) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Ingrese el precio por el que compró el manga:")
+
+        val input = EditText(context)
+        input.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+        builder.setView(input)
+
+        builder.setPositiveButton("Aceptar") { _, _ ->
+            val textoIngresado = input.text.toString()
+            val precioIngresado = textoIngresado.toFloatOrNull() ?: 0f
+            onPrecioIngresado(precioIngresado)
+        }
+
+        builder.setNeutralButton("No sé") { _, _ ->
+            onPrecioIngresado(0f)
+        }
+
+        builder.setNegativeButton("Regalado") { _, _ ->
+            onPrecioIngresado(-1f)
+        }
+
+        builder.show()
+    }
+
+    private fun AgregarManga(idManga: Int, idUsuario: Int, precioFinal: Float) {
+
         CoroutineScope(Dispatchers.IO).launch {
-            val request = EliminarYAgregarMangaRequest(idManga, idUsuario)
+            val request = AgregarMangaRequest(idManga, idUsuario, precioFinal)
             try {
                 val myResponse = retrofit.create(ApiServiceManga::class.java).agregarManga(request)
                 if (myResponse.isSuccessful) {
@@ -130,6 +179,8 @@ class DetalleMangaActivity : AppCompatActivity() {
                 if (response != null) {
                     runOnUiThread {
                         val mangaDetalle = response.detallesManga.firstOrNull()
+                        precio = mangaDetalle?.precio
+                        println(precio)
                         val estadoLectura = mangaDetalle?.estadoLectura
                         val imagenLectura = findViewById<ImageView>(R.id.imagenLectura)
                         if (estadoLectura == "Pendiente" || estadoLectura == "Sin Leer") {

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -16,6 +17,7 @@ import androidx.core.view.isVisible
 import com.aristidevs.androidmaster.R
 import com.aristidevs.androidmaster.databinding.ActivityMangaListBinding
 import com.aristidevs.androidmaster.databinding.ActivityPerfilBinding
+import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity
 import com.aristidevs.androidmaster.iniciosesion.InicioSesionMainActivity
 import com.aristidevs.androidmaster.inicioyregistro.LoginRequest
 import com.aristidevs.androidmaster.manga.ApiServiceManga
@@ -56,23 +58,57 @@ class PerfilActivity : AppCompatActivity() {
         }
     }
 
-    private fun obtenerDatosPerfil(userId: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = retrofit.create(ApiServiceManga::class.java).obtenerPerfil(userId)
-            if (response.isSuccessful) {
-                val perfil = response.body()
-                runOnUiThread {
-                    if (perfil != null) {
-                        binding.txtEmail.text = "************"
-                        binding.txtNombre.text = "************"
-                        binding.txtUsuario.text = perfil.usuario
-                        binding.txtEmail.tag = perfil.email
-                        binding.txtNombre.tag = perfil.nombre
-                    }
-                }
-            } else {
-                Log.e("PerfilActivity", "Error al obtener perfil")
+    private fun showLoadingState() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.mainContent.visibility = View.GONE
+        binding.errorView.visibility = View.GONE
+    }
+
+    private fun showContent() {
+        binding.progressBar.visibility = View.GONE
+        binding.mainContent.visibility = View.VISIBLE
+        binding.errorView.visibility = View.GONE
+    }
+
+    private fun showErrorState(message: String) {
+        binding.progressBar.visibility = View.GONE
+        binding.mainContent.visibility = View.GONE
+        binding.errorView.visibility = View.VISIBLE
+        binding.errorText.text = message
+
+        binding.retryButton.setOnClickListener {
+            val userId = intent.getIntExtra("USER_ID", -1).toString()
+            if (userId != "-1") {
+                initUI(userId)
             }
+        }
+    }
+
+    private fun obtenerDatosPerfil(userId: String) {
+        showLoadingState()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = retrofit.create(ApiServiceManga::class.java).obtenerPerfil(userId)
+                if (response.isSuccessful) {
+                    val perfil = response.body()
+                    runOnUiThread {
+                        if (perfil != null) {
+                            binding.txtEmail.text = "************"
+                            binding.txtNombre.text = "************"
+                            binding.txtUsuario.text = perfil.usuario
+                            binding.txtEmail.tag = perfil.email
+                            binding.txtNombre.tag = perfil.nombre
+                            showContent()
+                        }
+                    }
+                } else {
+                    Log.e("PerfilActivity", "Error al obtener perfil")
+                }
+            }catch (e: Exception){
+                e.printStackTrace()
+                showErrorState("Error de conexión: ${e.message}")
+            }
+
         }
     }
 
@@ -99,19 +135,26 @@ class PerfilActivity : AppCompatActivity() {
     }
 
     private fun autenticarYMostrarDatos(userId: String, contrasena: String) {
+        showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
-            val email = binding.txtEmail.tag as? String ?: return@launch
-            val loginRequest = LoginRequest(email, contrasena)
-            val loginResponse = retrofit.create(ApiServiceManga::class.java).autenticarUsuario(loginRequest)
+            try {
+                val email = binding.txtEmail.tag as? String ?: return@launch
+                val loginRequest = LoginRequest(email, contrasena)
+                val loginResponse = retrofit.create(ApiServiceManga::class.java).autenticarUsuario(loginRequest)
 
-            runOnUiThread {
-                if (loginResponse.isSuccessful) {
-                    binding.txtEmail.text = email
-                    binding.txtNombre.text = binding.txtNombre.tag as? String ?: ""
-                    binding.btnMostrarEmail.isVisible = false
-                } else {
-                    Toast.makeText(this@PerfilActivity, "Autenticación fallida", Toast.LENGTH_SHORT).show()
+                runOnUiThread {
+                    if (loginResponse.isSuccessful) {
+                        binding.txtEmail.text = email
+                        binding.txtNombre.text = binding.txtNombre.tag as? String ?: ""
+                        binding.btnMostrarEmail.isVisible = false
+                        showContent()
+                    } else {
+                        Toast.makeText(this@PerfilActivity, "Autenticación fallida", Toast.LENGTH_SHORT).show()
+                    }
                 }
+            }catch (e:Exception){
+                e.printStackTrace()
+                showErrorState("Error de conexión: ${e.message}")
             }
         }
     }

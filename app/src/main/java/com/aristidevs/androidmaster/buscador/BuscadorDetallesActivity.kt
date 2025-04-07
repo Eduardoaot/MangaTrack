@@ -3,6 +3,7 @@ package com.aristidevs.androidmaster.buscador
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -54,7 +55,20 @@ class BuscadorDetallesActivity : AppCompatActivity() {
 
     }
 
+    private fun showLoadingState() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.mainContent.visibility = View.GONE
+        binding.errorView.visibility = View.GONE
+    }
+
+    private fun showContent() {
+        binding.progressBar.visibility = View.GONE
+        binding.mainContent.visibility = View.VISIBLE
+        binding.errorView.visibility = View.GONE
+    }
+
     private fun searchSeries(name: String) {
+        showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
             // Ejecutamos la solicitud a la API usando el nombre como parámetro
             val myResponse = retrofit.create(ApiServiceManga::class.java).searchSearchDataSeries(name)
@@ -71,6 +85,7 @@ class BuscadorDetallesActivity : AppCompatActivity() {
                     runOnUiThread {
                         // Actualizamos el RecyclerView con los resultados
                         adapter.updateList(busquedaLista)  // Actualizamos la lista del RecyclerView con los resultados
+                        showContent()
                     }
                 }
             } else {

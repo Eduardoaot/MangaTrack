@@ -11,13 +11,13 @@ import com.squareup.picasso.Picasso
 
 class DetalleSerieHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    private val binding = ItemDetalleSerieBinding.bind(view)
+    val binding = ItemDetalleSerieBinding.bind(view)
 
     fun bind(
         listaMangaSerieItemResponse: ListaMangaSerieItemResponse,
         onItemSelected: (Int) -> Unit,
         onAddOrRemove: (Int, Boolean) -> Unit,
-        todosLosMangasAgregados: Boolean // Nuevo parámetro para saber si todos los mangas están agregados
+        todosLosMangasAgregados: Boolean
     ) {
         val mangaNum = listaMangaSerieItemResponse.mangaNum
         val mangaNumText = if (mangaNum == mangaNum.toInt().toFloat()) {
@@ -79,8 +79,7 @@ class DetalleSerieHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.root.isVisible = false
         }
     }
-
-
-
 }
+
+
 

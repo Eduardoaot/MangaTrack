@@ -1,13 +1,16 @@
 package com.aristidevs.androidmaster.principallectura.agregarpendientes
 
 import MangasPendientesAdapter
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.aristidevs.androidmaster.MenuActivity
 import com.aristidevs.androidmaster.R
 import com.aristidevs.androidmaster.databinding.ActivityAgregarPendientesBinding
 import com.aristidevs.androidmaster.databinding.ActivityLecturaBinding
@@ -43,7 +46,45 @@ class AgregarPendientesActivity : AppCompatActivity() {
             // Realizar la acción de volver atrás
             onBackPressedDispatcher.onBackPressed()
         }
-        initUI(id_usuario)
+
+        if (id_usuario != -1) {
+            initUI(id_usuario)
+        } else {
+            navigateToMenu()
+        }
+
+    }
+
+    private fun navigateToMenu() {
+        val intent = Intent(this, MenuActivity::class.java)
+        startActivity(intent)
+        finish()  // Finaliza la actividad actual
+    }
+
+    private fun showLoadingState() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.mainContent.visibility = View.GONE
+        binding.errorView.visibility = View.GONE
+    }
+
+    private fun showContent() {
+        binding.progressBar.visibility = View.GONE
+        binding.mainContent.visibility = View.VISIBLE
+        binding.errorView.visibility = View.GONE
+    }
+
+    private fun showErrorState(message: String) {
+        binding.progressBar.visibility = View.GONE
+        binding.mainContent.visibility = View.GONE
+        binding.errorView.visibility = View.VISIBLE
+        binding.errorText.text = message
+
+        binding.retryButton.setOnClickListener {
+            val id_usuario: Int = intent.getIntExtra(DetalleMangaActivity.USER_ID, -1)
+            if (id_usuario != -1) {
+                initUI(id_usuario)
+            }
+        }
     }
 
     private fun initUI(idUsuario: Int) {
@@ -71,7 +112,7 @@ class AgregarPendientesActivity : AppCompatActivity() {
             // Creamos el objeto de solicitud para cada id_manga
             val marcarLeidoRequest = MarcarLeidoRequest(idManga, idUsuario, 2)
 
-            // Realizamos el POST con Retrofit dentro de un Coroutine
+            showLoadingState()
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     // Llamada al servicio API
@@ -86,13 +127,14 @@ class AgregarPendientesActivity : AppCompatActivity() {
                             runOnUiThread {
                                 initUI(idUsuario) // Actualizamos la UI después de cada cambio
                                 MangasPendientesHolder.SELECTED_IDES.clear()
+                                showContent()
                             }
                         }
                     } else {
-                        Log.e("MarcarLeido", "Error en la actualización del estado de lectura para el manga ID: $idManga")
+                        showErrorState("Conexión Fallida.")
                     }
                 } catch (e: Exception) {
-                    Log.e("MarcarLeido", "Error al hacer la solicitud POST para el manga ID: $idManga: ${e.message}")
+                    showErrorState("Conexión Fallida.")
                 }
             }
         }
@@ -100,6 +142,7 @@ class AgregarPendientesActivity : AppCompatActivity() {
     }
 
     private fun searchDataPendientes(idUsuario: Int) {
+        showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
             // Llamamos al servicio de la API para obtener los datos
             val myResponse = retrofit.create(ApiServiceManga::class.java).searchDataLecturaPendientes(idUsuario.toString())
@@ -114,13 +157,11 @@ class AgregarPendientesActivity : AppCompatActivity() {
                     runOnUiThread {
                         val lecturaData = response.detalles
                         adapter.updateList(response.detalles)  // Actualizamos la lista del adaptador
+                        showContent()
                     }
                 }
             } else {
                 Log.i("aristidevs", "Error en la petición: ${myResponse.code()} - ${myResponse.message()}")
-                runOnUiThread {
-                    // Mostrar un mensaje de error, si lo deseas
-                }
             }
         }
     }

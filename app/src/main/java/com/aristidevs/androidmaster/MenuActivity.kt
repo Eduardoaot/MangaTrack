@@ -12,8 +12,10 @@ import com.aristidevs.androidmaster.detallesmanga.DetalleMangaActivity.Companion
 import com.aristidevs.androidmaster.principalcoleccion.ColeccionDetallesActivity
 import com.aristidevs.androidmaster.iniciosesion.InicioSesionMainActivity
 import com.aristidevs.androidmaster.principallectura.LecturaActivity
+import com.aristidevs.androidmaster.principalmonetario.MonetarioActivity
 import com.aristidevs.androidmaster.principalpamodoru.PamodoruActivity
 import com.aristidevs.androidmaster.principalperfil.PerfilActivity
+import com.aristidevs.androidmaster.principalpresupuestos.presupuestos.PresupuestosActivity
 
 
 class MenuActivity : AppCompatActivity() {
@@ -28,6 +30,8 @@ class MenuActivity : AppCompatActivity() {
         val btnPerfil = findViewById<Button>(R.id.btnPerfil)
         val btnLec = findViewById<Button>(R.id.btnLec)
         val btnPamo = findViewById<Button>(R.id.btnPamo)
+        val btnPresup = findViewById<Button>(R.id.btnPresup)
+        val btnMonetario = findViewById<Button>(R.id.btnMonetario)
 
 
         // Setear los listeners para los botones
@@ -39,6 +43,22 @@ class MenuActivity : AppCompatActivity() {
         btnPamo.setOnClickListener { navigateToPamodoru(userId) }
 
         btnPerfil.setOnClickListener { navigateToPerfil(userId) }
+
+        btnPresup.setOnClickListener { navigateToPresupuestos(userId) }
+
+        btnMonetario.setOnClickListener { navigateToMonetario(userId) }
+    }
+
+    private fun navigateToPresupuestos(userId: Int) {
+        val intent = Intent(this, PresupuestosActivity::class.java)
+        intent.putExtra(USER_ID, userId) // Pasar el ID como un extra
+        startActivity(intent)
+    }
+
+    private fun navigateToMonetario(userId: Int) {
+        val intent = Intent(this, MonetarioActivity::class.java)
+        intent.putExtra(USER_ID, userId) // Pasar el ID como un extra
+        startActivity(intent)
     }
 
     private fun navigateToColeccion(userId: Int) {

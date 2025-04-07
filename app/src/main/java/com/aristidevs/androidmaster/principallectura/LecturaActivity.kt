@@ -88,6 +88,18 @@ class LecturaActivity : AppCompatActivity() {
         }
     }
 
+    private fun showLoadingState() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.mainContent.visibility = View.GONE
+        binding.errorView.visibility = View.GONE
+    }
+
+    private fun showContent() {
+        binding.progressBar.visibility = View.GONE
+        binding.mainContent.visibility = View.VISIBLE
+        binding.errorView.visibility = View.GONE
+    }
+
     private fun leerManga(idManga: Int, idUsuario: Int) {
         // Crear el AlertDialog
         val alertDialog = AlertDialog.Builder(this) // "this" es el contexto de la actividad o fragmento
@@ -106,7 +118,7 @@ class LecturaActivity : AppCompatActivity() {
 
     private fun cambiarAEstadoLeido(idManga: Int, idUsuario: Int) {
         val marcarLeidoRequest = MarcarLeidoRequest(idManga, idUsuario, 3)
-        // Realizamos el POST con Retrofit
+        showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val responsePost = retrofit.create(ApiServiceManga::class.java)
@@ -118,6 +130,7 @@ class LecturaActivity : AppCompatActivity() {
                         Log.i("MarcarLeido", "Estado de lectura actualizado a: ${responseBody.estadoLectura}")
                         runOnUiThread {
                             initUI(idUsuario)
+                            showContent()
                         }
                     }
                 } else {
@@ -148,7 +161,7 @@ class LecturaActivity : AppCompatActivity() {
 
     private fun cambiarAEstadoPendiente(idManga: Int, idUsuario: Int) {
         val marcarLeidoRequest = MarcarLeidoRequest(idManga, idUsuario, 1)
-        // Realizamos el POST con Retrofit
+        showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val responsePost = retrofit.create(ApiServiceManga::class.java)
@@ -160,6 +173,7 @@ class LecturaActivity : AppCompatActivity() {
                         Log.i("MarcarLeido", "Estado de lectura actualizado a: ${responseBody.estadoLectura}")
                         runOnUiThread {
                             actualizarListaGeneral(idUsuario)
+                            showContent()
                         }
                     }
                 } else {
@@ -182,6 +196,7 @@ class LecturaActivity : AppCompatActivity() {
     }
 
     private fun actualizarListaGeneral(idUsuario: Int) {
+        showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
             // Llamamos al servicio de la API para obtener los datos
             val myResponse = retrofit.create(ApiServiceManga::class.java).searchDataLectura(idUsuario.toString())
@@ -201,6 +216,7 @@ class LecturaActivity : AppCompatActivity() {
                     // Actualiza los valores de los TextViews con la data recibida
                     runOnUiThread {
                         adapter.updateList(lecturaData.listaMangasSinLeer)
+                        showContent()
                     }
                 }
             } else {
@@ -215,6 +231,7 @@ class LecturaActivity : AppCompatActivity() {
     }
 
     private fun searchDataLectura(idUsuario: Int) {
+        showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
             // Llamamos al servicio de la API para obtener los datos
             val myResponse = retrofit.create(ApiServiceManga::class.java).searchDataLectura(idUsuario.toString())
@@ -243,6 +260,7 @@ class LecturaActivity : AppCompatActivity() {
                             lecturaData.mangasAniadidos, lecturaData.mangasLeidos)
                         // Actualiza el RecyclerView con la lista de mangas sin leer
                         adapter.updateList(lecturaData.listaMangasSinLeer)
+                        showContent()
                     }
                 }
             } else {
@@ -264,6 +282,7 @@ class LecturaActivity : AppCompatActivity() {
 
 
     private fun obtenerLecturaYMeta(idUsuario: Int, dialogView: View) {
+        showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
             // Llamamos a la API para obtener los datos de mangas leídos y meta
             val myResponse = retrofit.create(ApiServiceManga::class.java)
@@ -278,6 +297,7 @@ class LecturaActivity : AppCompatActivity() {
                             "Tu meta es de: ${response.mangasLeidosMes}"
                         dialogView.findViewById<TextView>(R.id.txtLeidos).text =
                             "Llevas leídos: ${response.mangasLeidosTot}"
+                        showContent()
                     }
                 }
             } else {
