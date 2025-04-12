@@ -213,6 +213,7 @@ class DetallePresupuestoActivity : AppCompatActivity() {
     }
 
     private fun showErrorState(message: String) {
+
         binding.progressBar.visibility = View.GONE
         binding.mainContent.visibility = View.GONE
         binding.errorView.visibility = View.VISIBLE

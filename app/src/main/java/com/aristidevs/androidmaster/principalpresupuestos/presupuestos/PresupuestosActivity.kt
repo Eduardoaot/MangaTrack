@@ -73,6 +73,22 @@ class PresupuestosActivity : AppCompatActivity() {
         binding.errorView.visibility = View.GONE
     }
 
+    private fun showErrorState(message: String) {
+        runOnUiThread {
+            binding.progressBar.visibility = View.GONE
+            binding.mainContent.visibility = View.GONE
+            binding.errorView.visibility = View.VISIBLE
+            binding.errorText.text = message
+
+            binding.retryButton.setOnClickListener {
+                val id_usuario: Int = intent.getIntExtra(DetalleMangaActivity.USER_ID, -1)
+                if (id_usuario != -1) {
+                    initUI(id_usuario)
+                }
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -250,7 +266,7 @@ class PresupuestosActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                Log.e("Pendientes", "Error en la consulta: ${myResponse.code()}")
+                showErrorState("Error de conexión.")
             }
         }
     }
@@ -282,7 +298,7 @@ class PresupuestosActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                Log.i("aristidevs", "Error en la búsqueda de mangas faltantes")
+                showErrorState("Error de conexión.")
             }
         }
     }
