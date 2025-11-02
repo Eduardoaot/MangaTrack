@@ -88,7 +88,8 @@ class PerfilActivity : AppCompatActivity() {
         showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = retrofit.create(ApiServiceManga::class.java).obtenerPerfil(userId)
+                val response = retrofit
+                    .create(ApiServiceManga::class.java).obtenerPerfil(userId)
                 if (response.isSuccessful) {
                     val perfil = response.body()
                     runOnUiThread {
@@ -127,7 +128,9 @@ class PerfilActivity : AppCompatActivity() {
                 if (contrasena.isNotEmpty()) {
                     onSuccess(contrasena)
                 } else {
-                    Toast.makeText(this, "Contraseña vacía", Toast.LENGTH_SHORT).show()
+                    Toast.
+                    makeText(this, "Contraseña vacía",
+                        Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("Cancelar", null)

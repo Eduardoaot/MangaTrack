@@ -66,21 +66,19 @@ class BolsaActivity : AppCompatActivity() {
         nombreBolsa: String?,
         idUsuario: Int
     ) {
-
         if (mangasBolsa.isNullOrEmpty()) {
-            // Mostrar un mensaje de error si la lista de mangas está vacía o el nombre de la bolsa está vacío
-            Toast.makeText(this, "La lista está vacía. Por favor, vuelve a realizar el plan.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                "La lista está vacía. Por favor, vuelve a realizar el plan.",
+                Toast.LENGTH_SHORT).show()
             return // No realizar la solicitud si la lista de mangas o el nombre de la bolsa están vacíos
         }
-
-        // Verificar si el nombre de la bolsa está vacío, null o solo contiene espacios
         if (nombreBolsa.isNullOrBlank()) {
             // Mostrar un mensaje de error si el nombre está vacío o es null
-            Toast.makeText(this, "El nombre de la bolsa es obligatorio.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                "El nombre de la bolsa es obligatorio.",
+                Toast.LENGTH_SHORT).show()
             return // No realizar la solicitud si el nombre está vacío
         }
-
-        // Si el nombre está lleno, procedemos con la solicitud POST
         val guardarBolsaRequest = GuardarBolsaRequest(
             mangas_bolsa = mangasBolsa,
             descuento = descuento,
@@ -90,13 +88,12 @@ class BolsaActivity : AppCompatActivity() {
         showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // Realizar la solicitud POST, sin esperar respuesta
-                retrofit.create(ApiServiceManga::class.java).botonGuardarPresupuesto(guardarBolsaRequest)
-
-                // Si llegamos aquí, la solicitud fue exitosa
+                retrofit.create(ApiServiceManga::class.java)
+                    .botonGuardarPresupuesto(guardarBolsaRequest)
                 runOnUiThread {
-                    // Realiza la acción después de que se haya guardado correctamente (por ejemplo, ir a la pantalla anterior)
-                    Toast.makeText(this@BolsaActivity, "Presupuesto guardado correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@BolsaActivity,
+                        "Presupuesto guardado correctamente",
+                        Toast.LENGTH_SHORT).show()
                     finish() // Regresa a la pantalla anterior
                     showContent()
                 }
@@ -163,8 +160,6 @@ class BolsaActivity : AppCompatActivity() {
                 // No es necesario hacer nada aquí
             }
         })
-
-
         mostrarMangasEnBolsa(mangasBolsa)
     }
 
@@ -196,21 +191,16 @@ class BolsaActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val requestData = AgregarPlanRequest(listaIds = mangasBolsa) // Enviar lista de IDs
             val myResponse = retrofit.create(ApiServiceManga::class.java).buscarMangasPost(requestData)
-
             if (myResponse.isSuccessful) {
                 val response: AgregarPlanResponse? = myResponse.body()
-
                 if (response != null) {
                     var totalSum = 0f
                     var subtotal = 0f
                     var descuentoCalculado = 0f
                     val mangasConDescuento = mutableListOf<Pair<PlanElementosItemResponse, Boolean>>()
                     val mangasRecibo = mutableListOf<PlanElementosItemResponse>()
-
                     response.mangasPendientes.forEach { manga ->
                         subtotal += manga.precio
-
-                        // Si el descuento es 3x2, agregamos el manga con descuento del 100%
                         if (descuento == 1.0f) {
                             mangasConDescuento.add(manga to true)  // Manga con descuento
                         } else {
@@ -218,36 +208,24 @@ class BolsaActivity : AppCompatActivity() {
                             val precioConDescuento = manga.precio * (1 - descuento)
                             totalSum += precioConDescuento
                         }
-
                         mangasRecibo.add(manga)
                     }
 
                     if (descuento == 1.0f) {
-                        // Ordenamos los mangas por precio (de menor a mayor)
                         mangasConDescuento.sortBy { it.first.precio }
-
-                        // Calculamos el número de grupos completos de 3 mangas
                         val totalGruposDe3 = mangasConDescuento.size / 3
-
-                        // Sumamos el precio total de todos los mangas en mangasConDescuento
                         mangasConDescuento.forEach {
                             totalSum += it.first.precio
                         }
-
-                        // Encontramos los índices de los mangas con los precios más bajos (igual al número de grupos)
                         val indicesConDescuento = mutableListOf<Int>()
                         for (i in 0 until totalGruposDe3) {
                             indicesConDescuento.add(i)  // Agregamos un índice por cada grupo
                         }
-
-                        // Mark the elements with the smallest prices for the discount (true) and subtract their prices from totalSum
                         for (i in indicesConDescuento) {
                             val precioMasBajo = mangasConDescuento[i].first.precio
                             mangasConDescuento[i] = mangasConDescuento[i].copy(second = true)  // Marca como descuento del 100%
                             totalSum -= precioMasBajo  // Restamos el precio del manga más barato
                         }
-
-                        // Ahora, aseguramos que los demás mangas tengan descuento como false
                         for (i in mangasConDescuento.indices) {
                             if (i !in indicesConDescuento) {  // Si el índice no está marcado como descuento
                                 mangasConDescuento[i] = mangasConDescuento[i].copy(second = false)  // No aplica descuento

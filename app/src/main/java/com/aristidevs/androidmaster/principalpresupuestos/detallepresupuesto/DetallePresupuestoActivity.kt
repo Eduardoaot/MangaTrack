@@ -159,17 +159,23 @@ class DetallePresupuestoActivity : AppCompatActivity() {
                 if (myResponse.isSuccessful) {
                     // Si la respuesta es exitosa, no hace falta acceder al cuerpo
                     runOnUiThread {
-                        Toast.makeText(this@DetallePresupuestoActivity, "Manga agregado correctamente", Toast.LENGTH_SHORT).show()
+                        Toast
+                            .makeText(this@DetallePresupuestoActivity, "Manga agregado correctamente", Toast.
+                            LENGTH_SHORT).show()
                     }
                 } else {
                     // Si la respuesta no es exitosa, manejar el error
                     runOnUiThread {
-                        Toast.makeText(this@DetallePresupuestoActivity, "Error al agregar manga", Toast.LENGTH_SHORT).show()
+                        Toast
+                            .makeText(this@DetallePresupuestoActivity, "Error al agregar manga",
+                                Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
                 runOnUiThread {
-                    Toast.makeText(this@DetallePresupuestoActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+                    Toast
+                        .makeText(this@DetallePresupuestoActivity, "Error de conexión",
+                            Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -313,14 +319,16 @@ class DetallePresupuestoActivity : AppCompatActivity() {
 
         if (mangasBolsa.isNullOrEmpty()) {
             // Mostrar un mensaje de error si la lista de mangas está vacía o el nombre de la bolsa está vacío
-            Toast.makeText(this, "La lista está vacía. Por favor, vuelve a realizar el plan.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                "La lista está vacía. Por favor, vuelve a realizar el plan.", Toast.LENGTH_SHORT).show()
             return // No realizar la solicitud si la lista de mangas o el nombre de la bolsa están vacíos
         }
 
         // Verificar si el nombre de la bolsa está vacío, null o solo contiene espacios
         if (nombreBolsa.isNullOrBlank()) {
             // Mostrar un mensaje de error si el nombre está vacío o es null
-            Toast.makeText(this, "El nombre de la bolsa es obligatorio.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                "El nombre de la bolsa es obligatorio.", Toast.LENGTH_SHORT).show()
             return // No realizar la solicitud si el nombre está vacío
         }
 
@@ -340,7 +348,8 @@ class DetallePresupuestoActivity : AppCompatActivity() {
                 // Si llegamos aquí, la solicitud fue exitosa
                 runOnUiThread {
                     // Realiza la acción después de que se haya guardado correctamente (por ejemplo, ir a la pantalla anterior)
-                    Toast.makeText(this@DetallePresupuestoActivity, "Presupuesto guardado correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DetallePresupuestoActivity,
+                        "Presupuesto guardado correctamente", Toast.LENGTH_SHORT).show()
                     finish() // Regresa a la pantalla anterior
                 }
 
@@ -481,25 +490,18 @@ class DetallePresupuestoActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val requestData = AgregarPlanRequest(listaIds = mangasBolsa) // Enviar lista de IDs
             val myResponse = retrofit.create(ApiServiceManga::class.java).buscarMangasPost(requestData)
-
             if (myResponse.isSuccessful) {
                 val response: AgregarPlanResponse? = myResponse.body()
-
                 if (response != null) {
                     var totalSum = 0f
                     var subtotal = 0f
                     val mangasConDescuento = mutableListOf<Pair<PlanElementosItemResponse, Boolean>>()
                     val mangasRecibo = mutableListOf<PlanElementosItemResponse>()
-
-                    // Lista para almacenar los descuentos de cada manga
                     val mangasPrecios = mutableListOf<Float>()
-
                     response.mangasPendientes.forEach { manga ->
                         subtotal += manga.precio
                         var descuentoManga = 0f
                         var precioConDescuento = manga.precio
-
-                        // Si el descuento es 3x2, agregamos el manga con descuento del 100%
                         if (descuento == 1.0f) {
                             mangasConDescuento.add(manga to true)  // Manga con descuento
                         } else {
@@ -507,53 +509,35 @@ class DetallePresupuestoActivity : AppCompatActivity() {
                             precioConDescuento = manga.precio * (1 - descuento)
                             totalSum += precioConDescuento
                         }
-
-                        // Calculamos el descuento para este manga
                         descuentoManga = manga.precio - precioConDescuento
                         mangasPrecios.add(descuentoManga)  // Guardamos el monto del descuento
                         mangasRecibo.add(manga)
                     }
-
                     if (descuento == 1.0f) {
-                        // Ordenamos los mangas por precio (de menor a mayor)
                         mangasConDescuento.sortBy { it.first.precio }
-
-                        // Calculamos el número de grupos completos de 3 mangas
                         val totalGruposDe3 = mangasConDescuento.size / 3
-
-                        // Sumamos el precio total de todos los mangas en mangasConDescuento
                         mangasConDescuento.forEach {
                             totalSum += it.first.precio
                         }
-
-                        // Encontramos los índices de los mangas con los precios más bajos (igual al número de grupos)
                         val indicesConDescuento = mutableListOf<Int>()
                         for (i in 0 until totalGruposDe3) {
                             indicesConDescuento.add(i)  // Agregamos un índice por cada grupo
                         }
-
-                        // Mark the elements with the smallest prices for the discount (true) and subtract their prices from totalSum
                         for (i in indicesConDescuento) {
                             val precioMasBajo = mangasConDescuento[i].first.precio
                             mangasConDescuento[i] = mangasConDescuento[i].copy(second = true)  // Marca como descuento del 100%
                             totalSum -= precioMasBajo  // Restamos el precio del manga más barato
                         }
-
-                        // Ahora, aseguramos que los demás mangas tengan descuento como false
                         for (i in mangasConDescuento.indices) {
                             if (i !in indicesConDescuento) {  // Si el índice no está marcado como descuento
                                 mangasConDescuento[i] = mangasConDescuento[i].copy(second = false)  // No aplica descuento
                             }
                         }
                         mangasPrecios.clear()
-
-// Restaurar el orden original según los IDs de response.mangasPendientes
                         val ordenOriginal = response.mangasPendientes.map { it.idManga }
+                        val mangasConDescuentoOrdenados = mangasConDescuento.sortedBy {
+                            (manga, _) -> ordenOriginal.indexOf(manga.idManga) }
 
-// Ordenamos mangasConDescuento según el orden de IDs en response.mangasPendientes
-                        val mangasConDescuentoOrdenados = mangasConDescuento.sortedBy { (manga, _) -> ordenOriginal.indexOf(manga.idManga) }
-
-// Ahora recorremos la lista ordenada y agregamos los precios a mangasPrecios
                         mangasConDescuentoOrdenados.forEach { (manga, tieneDescuento) ->
                             if (tieneDescuento) {
                                 mangasPrecios.add(manga.precio)
@@ -561,15 +545,10 @@ class DetallePresupuestoActivity : AppCompatActivity() {
                                 mangasPrecios.add(0f)
                             }
                         }
-
-
                     }
-
                     totalDescuento = subtotal - totalSum
                     totalPrecio = totalSum
                     var totalMangas = response.mangasPendientes.size
-
-                    // Pasamos los descuentos de cada manga
                     runOnUiThread {
                         binding.txtSubTotal.text = "SubTotal: $${String.format("%.2f", subtotal)}"
                         binding.txtDescuento.text = "Descuento: $${String.format("%.2f", totalDescuento)}"
@@ -578,18 +557,13 @@ class DetallePresupuestoActivity : AppCompatActivity() {
                         println(mangasConDescuento)
                         println(response.mangasPendientes)
                         adapter.updateList(response.mangasPendientes)
-
-                        // Aseguramos de pasar los mangas y la información del descuento al adapter
                         val adapter = ReciboAdapterDetalle(mangasConDescuento, descuento)
                         val recyclerView: RecyclerView = findViewById(R.id.rvRecibo)
                         recyclerView.layoutManager = LinearLayoutManager(this@DetallePresupuestoActivity)
                         recyclerView.adapter = adapter
-
-                        // Mostrar los descuentos de cada manga (esto es solo para ejemplo)
                         println("Descuentos de cada manga:")
                         mangasPreciosLista.clear()
                             mangasPreciosLista.addAll(mangasPrecios)
-
                         Log.i("BolsaActivity", "Mangas en bolsa actualizados correctamente.")
                         println(mangasBolsa)
                     }

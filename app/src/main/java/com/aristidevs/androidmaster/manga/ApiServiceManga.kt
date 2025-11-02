@@ -44,9 +44,6 @@ interface ApiServiceManga {
     @GET("/api/coleccion-manga/detalles/{id}")
     suspend fun getMangaByID(@Path("id") usuarioId: String): Response<MangaListDataResponse>
 
-    @GET("/api/coleccion-manga/detalles/{nombre_serie}")
-    suspend fun searchMangaByName(@Path("id") usuarioId: String): Response<MangaListDataResponse>
-
     @GET("/api/coleccion-manga/series/{id}")
     suspend fun searchSerieById(@Path("id") usuarioIdSerie: String): Response<SerieListDataResponse>
 
@@ -79,7 +76,7 @@ interface ApiServiceManga {
     @POST("/api/coleccion-manga/agregar-manga")
     suspend fun agregarManga(@Body actualizar: AgregarMangaRequest): Response<AgregarMangaResponse>
 
-    @GET("/api/seriesdetalles/detalles/{id_usuario}/{id_serie}")
+    @GET("/api/series/detalles/{id_usuario}/{id_serie}")
     suspend fun searchDataSerie(@Path("id_usuario") idUsuario: String, @Path("id_serie") idSerie: String): Response<DetalleSerieDataResponse>
 
     @GET("/api/manga/lectura/{id_usuario}")
@@ -96,7 +93,6 @@ interface ApiServiceManga {
 
     @GET("/api/usuarios/perfil/{id_usuario}")
     suspend fun obtenerPerfil(@Path("id_usuario") idUsuario: String): Response<PerfilDataResponse>
-
 
     //Solicitudes para principal pendientes
     @GET("/api/mangas-pendientes/faltantes/{idUsuario}")
@@ -123,8 +119,6 @@ interface ApiServiceManga {
     @POST("/api/monetario/guardar")
     suspend fun guardarEnMonetario(@Body actualizar: GuardarEnMonetarioRequest): Response<Unit>
 
-    @GET("/api/estadisticas/{idUsuario}")
+    @GET("/api/monetario/{idUsuario}")
     suspend fun obtenerEstadisticasUsuario(@Path("idUsuario") idUsuario: Int): Response<EstadisticasUsuarioResponse>
-
-
 }

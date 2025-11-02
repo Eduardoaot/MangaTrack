@@ -81,7 +81,8 @@ class MonetarioActivity : AppCompatActivity() {
         showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = retrofit.create(ApiServiceManga::class.java).obtenerEstadisticasUsuario(idUsuario)
+                val response = retrofit.create(ApiServiceManga::class.java)
+                    .obtenerEstadisticasUsuario(idUsuario)
 
                 if (response.isSuccessful) {
                     val datos = response.body()
@@ -100,15 +101,18 @@ class MonetarioActivity : AppCompatActivity() {
                             showContent()
                         }
                     } else {
-                        showErrorState("Los datos del usuario no están disponibles.")
+                        showErrorState(
+                            "Los datos del usuario no están disponibles.")
                     }
                 } else {
-                    showErrorState("Error en la respuesta del servidor: ${response.code()}")
+                    showErrorState(
+                        "Error en la respuesta del servidor: ${response.code()}")
                 }
 
             } catch (e: Exception) {
                 e.printStackTrace()
-                showErrorState("Error de conexión: ${e.message}")
+                showErrorState(
+                    "Error de conexión: ${e.message}")
             }
         }
     }

@@ -13,7 +13,7 @@ data class DetallePresupuestoResult(
     @SerializedName("idUsuario") val idUsuario: Int,
     @SerializedName("descuento") val descuento: Float,
     @SerializedName("fechaPresupuestoCreado") val fechaPresupuestoCreado: String,
-    @SerializedName("listaMangasPresupuesto") val listaMangasPresupuesto: List<MangaPresupuestoItem>
+    @SerializedName("listaMangasPresupuesto") val listaMangasPresupuesto: List<MangaPresupuestoItem>,
 )
 
 data class MangaPresupuestoItem(

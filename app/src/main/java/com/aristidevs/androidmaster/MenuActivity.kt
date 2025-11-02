@@ -23,8 +23,6 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         val userId = intent.getIntExtra("USER_ID", -1)
-
-
         val btnColeccion = findViewById<Button>(R.id.btnColec)
         val searchViewMenu = findViewById<ImageButton>(R.id.searchViewMenu)
         val btnPerfil = findViewById<Button>(R.id.btnPerfil)
@@ -32,61 +30,45 @@ class MenuActivity : AppCompatActivity() {
         val btnPamo = findViewById<Button>(R.id.btnPamo)
         val btnPresup = findViewById<Button>(R.id.btnPresup)
         val btnMonetario = findViewById<Button>(R.id.btnMonetario)
-
-
-        // Setear los listeners para los botones
         btnColeccion.setOnClickListener { navigateToColeccion(userId) }
-
         searchViewMenu.setOnClickListener { navigateToBuscador(userId) }
         btnLec.setOnClickListener { navigateToLectura(userId) }
-
         btnPamo.setOnClickListener { navigateToPamodoru(userId) }
-
         btnPerfil.setOnClickListener { navigateToPerfil(userId) }
-
         btnPresup.setOnClickListener { navigateToPresupuestos(userId) }
-
         btnMonetario.setOnClickListener { navigateToMonetario(userId) }
     }
-
     private fun navigateToPresupuestos(userId: Int) {
         val intent = Intent(this, PresupuestosActivity::class.java)
         intent.putExtra(USER_ID, userId) // Pasar el ID como un extra
         startActivity(intent)
     }
-
     private fun navigateToMonetario(userId: Int) {
         val intent = Intent(this, MonetarioActivity::class.java)
         intent.putExtra(USER_ID, userId) // Pasar el ID como un extra
         startActivity(intent)
     }
-
     private fun navigateToColeccion(userId: Int) {
         val intent = Intent(this, ColeccionDetallesActivity::class.java)
         intent.putExtra("USER_ID", userId) // Pasar el ID como un extra
         startActivity(intent)
     }
-
     private fun navigateToPamodoru(userId: Int) {
         val intent = Intent(this, PamodoruActivity::class.java)
         intent.putExtra("USER_ID", userId) // Pasar el ID como un extra
         startActivity(intent)
     }
-
     private fun navigateToLectura(userId: Int) {
         val intent = Intent(this, LecturaActivity::class.java)
         intent.putExtra(USER_ID, userId) // Pasar el ID como un extra
         startActivity(intent)
     }
-
     private fun navigateToBuscador(userId: Int) {
         val intent = Intent(this, BuscadorActivity::class.java)
         intent.putExtra("USER_ID", userId) // Pasar el ID como un extra
         startActivity(intent)
     }
-
-    private fun navigateToPerfil(userId: Int) {
-        val intent = Intent(this, PerfilActivity::class.java)
+    private fun navigateToPerfil(userId: Int) { val intent = Intent(this, PerfilActivity::class.java)
         intent.putExtra("USER_ID", userId) // Pasar el ID como un extra
         startActivity(intent)
     }

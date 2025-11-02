@@ -187,7 +187,6 @@ class PresupuestosActivity : AppCompatActivity() {
         }
     }
 
-
     private fun filtrarPorPrecio(precioSeleccionado: String, mangas: List<PendienteMangaItemConEstado>) {
         val listaFiltrada = if (precioSeleccionado == "Todos") {
             mangas
@@ -198,9 +197,6 @@ class PresupuestosActivity : AppCompatActivity() {
 
         adapter.updateList(listaFiltrada)
     }
-
-
-
 
     private fun agregarManga(idManga: Int, precio: Float) {
         mangasEstados[idManga] = true  // Guardar el estado en el Map
@@ -230,32 +226,25 @@ class PresupuestosActivity : AppCompatActivity() {
         }
         adapter.updateList(nuevaLista)
     }
-
-
     private fun navigateToDetail(id_manga: Int, id_usuario: Int) {
         val intent = Intent(this, DetalleMangaActivity::class.java)
         intent.putExtra(DetalleMangaActivity.MANGA_ID, id_manga)
         intent.putExtra(DetalleMangaActivity.USER_ID, id_usuario)
         startActivity(intent)
     }
-
     private fun obtenerMangasFaltantes(idUsuario: Int) {
         showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
-            val myResponse = retrofit.create(ApiServiceManga::class.java).obtenerMangasFaltantes(idUsuario.toString())
+            val myResponse = retrofit.create(ApiServiceManga::class.java)
+                .obtenerMangasFaltantes(idUsuario.toString())
             if (myResponse.isSuccessful) {
                 val response = myResponse.body()
                 if (response != null) {
                     // Mapear los mangas a la nueva lista que incluye el estado (isAdded)
                     val mangasConEstado = response.mangasPendientes.map { manga ->
                         val isAdded = mangasEstados[manga.idManga] ?: false // Comprobar si el manga está agregado
-                        PendienteMangaItemConEstado(
-                            manga.idManga,
-                            manga.mangaImg,
-                            manga.mangaNum,
-                            manga.precio,
-                            manga.serieNom,
-                            isAdded
+                        PendienteMangaItemConEstado(manga.idManga, manga.mangaImg,
+                            manga.mangaNum, manga.precio, manga.serieNom, isAdded
                         )
                     }
                     runOnUiThread {
@@ -270,11 +259,11 @@ class PresupuestosActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun searchMangaByName(name: String, userId: Int) {
         showLoadingState()
         CoroutineScope(Dispatchers.IO).launch {
-            val myResponse = retrofit.create(ApiServiceManga::class.java).obtenerMangasFaltantes(userId.toString())
+            val myResponse = retrofit.create(ApiServiceManga::class.java)
+                .obtenerMangasFaltantes(userId.toString())
             if (myResponse.isSuccessful) {
                 val response: PendienteListFaltantesDataResponse? = myResponse.body()
                 runOnUiThread {
@@ -284,12 +273,8 @@ class PresupuestosActivity : AppCompatActivity() {
                         }.map { manga ->
                             val isAdded = mangasEstados[manga.idManga] ?: false
                             PendienteMangaItemConEstado(
-                                manga.idManga,
-                                manga.mangaImg,
-                                manga.mangaNum,
-                                manga.precio,
-                                manga.serieNom,
-                                isAdded
+                                manga.idManga, manga.mangaImg, manga.mangaNum,
+                                manga.precio, manga.serieNom, isAdded
                             )
                         }
                         adapter.updateList(filteredList)

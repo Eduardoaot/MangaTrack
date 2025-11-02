@@ -24,6 +24,7 @@ class InicioSesionMainActivity : AppCompatActivity() {
 
         screenSplash.setKeepOnScreenCondition { false }
 
+
         // Verificamos si hay sesión activa al iniciar la actividad
         if (verificarSesion()) {
             val userId = obtenerUserId()

@@ -66,7 +66,7 @@ class GuardadosActivity : AppCompatActivity() {
                 navigateToMangaDetail(mangaId, userId)
             },
             onDeleteSelected = { presupuestoId ->
-                showDeleteConfirmation(presupuestoId, userId)  // Nueva función para confirmar eliminación
+                showDeleteConfirmation(presupuestoId, userId)
             }
         )
         binding.rvPresupuestosGuardados.layoutManager = LinearLayoutManager(this)

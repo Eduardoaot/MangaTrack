@@ -102,7 +102,10 @@ class PamodoruActivity : AppCompatActivity() {
                 R.id.desc15 -> descansoDuration = 15 * 60 * 1000L
             }
 
-            Toast.makeText(this, "Pomodoro: ${pomodoroDuration / 60000} min | Descanso: ${descansoDuration / 60000} min", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Pomodoro: " +
+                    "${pomodoroDuration / 60000} min | Descanso: " +
+                    "${descansoDuration / 60000} min",
+                Toast.LENGTH_SHORT).show()
 
             if (isPomodoro) {
                 timeLeftInMillis = pomodoroDuration
@@ -154,14 +157,12 @@ class PamodoruActivity : AppCompatActivity() {
     private fun startTimer(restart: Boolean = true) {
         if (isRunning) return
         isRunning = true
-
         timer = object : CountDownTimer(timeLeftInMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeLeftInMillis = millisUntilFinished
                 updateTimerText()
                 binding.progressBar.progress = (millisUntilFinished / 1000).toInt()
             }
-
             override fun onFinish() {
                 if (isPomodoro) {
                     pomodoroCount++
@@ -172,11 +173,8 @@ class PamodoruActivity : AppCompatActivity() {
                     descansoCount++
                     updateDescansoCounter()
                     playSound()
-
                     ciclosCompletados++
                     if (ciclosCompletados >= maxCiclos) {
-
-
                         terminarPomodoro()
 
                         isRunning = false
@@ -184,7 +182,6 @@ class PamodoruActivity : AppCompatActivity() {
                     }
                     timeLeftInMillis = pomodoroDuration
                 }
-
                 isPomodoro = !isPomodoro
                 updateEstado()
                 updateProgressBar()
@@ -329,7 +326,6 @@ class PamodoruActivity : AppCompatActivity() {
         stopSound()
     }
 
-
     private fun stopSound() {
         mediaPlayer?.let {
             if (it.isPlaying) {
@@ -339,7 +335,6 @@ class PamodoruActivity : AppCompatActivity() {
         }
         mediaPlayer = null
     }
-
 
     private fun updatePomodoroCounter() {
         binding.txtTotalPamodorus.text = "$pomodoroCount"
@@ -385,9 +380,6 @@ class PamodoruActivity : AppCompatActivity() {
         binding.play.setImageResource(drawablePlay)
         binding.reiniciar.setImageResource(drawableReiniciar)
     }
-
-
-
 
     private fun updateProgressBar() {
         binding.progressBar.max = (timeLeftInMillis / 1000).toInt()
