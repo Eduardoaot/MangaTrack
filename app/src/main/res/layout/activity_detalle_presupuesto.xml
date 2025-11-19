@@ -21,7 +21,7 @@
         android:id="@+id/mainContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        >
 
 
     <TextView
@@ -61,22 +61,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtNombreBolsa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Nombre de la bolsa"
-        android:layout_margin="8dp"
-        android:fontFamily="@font/poppins_medium"
-        android:textColor="@color/black"
-        android:textSize="23sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/Comicsyregreso"
-        app:layout_constraintStart_toStartOf="parent"
-    />
+        <TextView
+            android:id="@+id/txtNombreBolsa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Nombre de la bolsa con un texto muy largo para probar el límite"
+            android:textColor="@color/black"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:layout_constraintTop_toBottomOf="@+id/Comicsyregreso"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
+
+        <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMangasEnBolsa"
         android:layout_width="0dp"
         android:layout_height="0dp"

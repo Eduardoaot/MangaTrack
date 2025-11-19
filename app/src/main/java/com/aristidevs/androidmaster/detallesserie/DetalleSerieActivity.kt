@@ -242,6 +242,7 @@ class DetalleSerieActivity : AppCompatActivity() {
                         runOnUiThread {
                             val detalles = response.resultadoDetalles
                             binding.txtTituloSerie.text = detalles.serieNom
+                            binding.txtTituloSerie.isSelected = true
                             binding.txtTotalMangasSerie.text = "Total: ${detalles.totalMangas} mangas"
                             binding.txtDescripcion.text = detalles.serieDesc
                             binding.txtAutor.text = detalles.serieAut

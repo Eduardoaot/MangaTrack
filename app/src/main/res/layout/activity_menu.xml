@@ -120,7 +120,7 @@
         android:textSize="22sp"
         android:layout_marginTop="40dp"
         android:backgroundTint="#5BA4F5"
-        android:text="     Presupuestos"
+        android:text="     Proyecciones"
         android:textAllCaps="false"
         android:fontFamily="@font/poppins_smibold"
         android:stateListAnimator="@null"

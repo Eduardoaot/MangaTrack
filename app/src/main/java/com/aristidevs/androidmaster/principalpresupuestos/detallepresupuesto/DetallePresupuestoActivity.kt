@@ -256,6 +256,7 @@ class DetallePresupuestoActivity : AppCompatActivity() {
                         // Configurar UI con los datos obtenidos
                         withContext(Dispatchers.Main) {
                             binding.txtNombreBolsa.text = nombreBolsa
+                            binding.txtNombreBolsa.isSelected = true
                             actualizarDescuentoSeleccionado(descuento)
                             setupUI()
                             mostrarMangasEnBolsa(mangasBolsa)

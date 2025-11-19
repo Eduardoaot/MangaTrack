@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -45,9 +46,14 @@ class DetalleMangaActivity : AppCompatActivity() {
 
     private fun initUI(id_manga: Int, id_usuario: Int){
         binding.btnflecha.setOnClickListener {
-            // Acción para regresar a la actividad anterior utilizando onBackPressedDispatcher
             onBackPressedDispatcher.onBackPressed()
         }
+
+        // Configurar el botón de reintentar
+        binding.retryButton.setOnClickListener {
+            searchManga(id_manga, id_usuario)
+        }
+
         searchManga(id_manga, id_usuario)
         val imagenLectura = findViewById<ImageView>(R.id.imagenLectura)
 
@@ -58,33 +64,48 @@ class DetalleMangaActivity : AppCompatActivity() {
             mostrarDialogoAgregarManga(this) { precioIngresado ->
                 when (precioIngresado) {
                     -1f -> {
-                        // Regalado: Llamar a la función con precio en 0
                         Toast.makeText(this, "El manga fue regalado", Toast.LENGTH_SHORT).show()
                         AgregarManga(id_manga, id_usuario, precio ?: 0f)
                     }
                     0f -> {
-                        // No sé: El precio es 0
                         precio = 0f
                         Toast.makeText(this, "Precio desconocido, asignado 0", Toast.LENGTH_SHORT).show()
                         AgregarManga(id_manga, id_usuario, 0f)
                     }
                     else -> {
-                        // Verificar que `precio` no sea null antes de hacer la resta
                         val diferenciaPrecio = (precio ?: 0f) - precioIngresado
                         Toast.makeText(this, "Precio ingresado: $precioIngresado\nDiferencia: $diferenciaPrecio", Toast.LENGTH_SHORT).show()
-
-                        // Llamamos a AgregarManga con la diferencia
                         AgregarManga(id_manga, id_usuario, diferenciaPrecio)
                     }
                 }
             }
         }
 
-
-
         binding.botonEliminarManga.setOnClickListener {
             EliminarManga(id_manga, id_usuario)
         }
+    }
+
+    // Función para mostrar el loading
+    private fun showLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.mainContent.visibility = View.GONE
+        binding.errorView.visibility = View.GONE
+    }
+
+    // Función para mostrar el contenido
+    private fun showContent() {
+        binding.progressBar.visibility = View.GONE
+        binding.mainContent.visibility = View.VISIBLE
+        binding.errorView.visibility = View.GONE
+    }
+
+    // Función para mostrar error
+    private fun showError(message: String = "Error al cargar datos") {
+        binding.progressBar.visibility = View.GONE
+        binding.mainContent.visibility = View.GONE
+        binding.errorView.visibility = View.VISIBLE
+        binding.errorText.text = message
     }
 
     private fun EliminarManga(idManga: Int, idUsuario: Int) {
@@ -96,7 +117,7 @@ class DetalleMangaActivity : AppCompatActivity() {
                     val message = myResponse.body()?.message ?: "Manga eliminado correctamente"
                     runOnUiThread {
                         Toast.makeText(this@DetalleMangaActivity, message, Toast.LENGTH_SHORT).show()
-                        binding.imagenLectura.isVisible = false  // Hacer invisible la imagen
+                        binding.imagenLectura.isVisible = false
                         binding.btnMarcarLeido.isVisible = false
                         binding.botonEliminarManga.isVisible = false
                         binding.btnAgregarManga.isVisible = true
@@ -140,7 +161,6 @@ class DetalleMangaActivity : AppCompatActivity() {
     }
 
     private fun AgregarManga(idManga: Int, idUsuario: Int, precioFinal: Float) {
-
         CoroutineScope(Dispatchers.IO).launch {
             val request = AgregarMangaRequest(idManga, idUsuario, precioFinal)
             try {
@@ -150,11 +170,10 @@ class DetalleMangaActivity : AppCompatActivity() {
                     val idMangaAgregado = myResponse.body()?.idMangaAgregado
                     runOnUiThread {
                         Toast.makeText(this@DetalleMangaActivity, message, Toast.LENGTH_SHORT).show()
-                        // Aquí puedes actualizar la UI si el manga fue agregado
-                        binding.imagenLectura.isVisible = true  // Hacer visible la imagen (ajustar según el caso)
-                        binding.btnMarcarLeido.isVisible = true  // Hacer visible el botón "Marcar leído"
-                        binding.botonEliminarManga.isVisible = true  // Hacer visible el botón de eliminar
-                        binding.btnAgregarManga.isVisible = false  // Hacer invisible el botón de agregar
+                        binding.imagenLectura.isVisible = true
+                        binding.btnMarcarLeido.isVisible = true
+                        binding.botonEliminarManga.isVisible = true
+                        binding.btnAgregarManga.isVisible = false
                     }
                 } else {
                     runOnUiThread {
@@ -170,61 +189,89 @@ class DetalleMangaActivity : AppCompatActivity() {
     }
 
     private fun searchManga(id_manga: Int, id_usuario: Int) {
+        // MOSTRAR LOADING
+        runOnUiThread {
+            showLoading()
+        }
+
         CoroutineScope(Dispatchers.IO).launch {
-            val myResponse = retrofit.create(ApiServiceManga::class.java)
-                .searchAllDataManga(id_manga.toString(), id_usuario.toString())
-            if (myResponse.isSuccessful) {
-                Log.i("aristidevs", "Funciona")
-                val response: DetalleMangaDataResponse? = myResponse.body()
-                if (response != null) {
-                    runOnUiThread {
-                        val mangaDetalle = response.detallesManga.firstOrNull()
-                        precio = mangaDetalle?.precio
-                        println(precio)
-                        val estadoLectura = mangaDetalle?.estadoLectura
-                        val imagenLectura = findViewById<ImageView>(R.id.imagenLectura)
-                        if (estadoLectura == "Pendiente" || estadoLectura == "Sin Leer") {
-                            imagenLectura.setImageResource(R.mipmap.pom)
-                        } else if (estadoLectura == "Leido") {
-                            imagenLectura.setImageResource(R.mipmap.pomcheack)
+            try {
+                val myResponse = retrofit.create(ApiServiceManga::class.java)
+                    .searchAllDataManga(id_manga.toString(), id_usuario.toString())
+
+                if (myResponse.isSuccessful) {
+                    Log.i("aristidevs", "Funciona")
+                    val response: DetalleMangaDataResponse? = myResponse.body()
+
+                    if (response != null) {
+                        runOnUiThread {
+                            // MOSTRAR CONTENIDO
+                            showContent()
+
+                            val mangaDetalle = response.detallesManga.firstOrNull()
+                            precio = mangaDetalle?.precio
+                            println(precio)
+                            val estadoLectura = mangaDetalle?.estadoLectura
+                            val imagenLectura = findViewById<ImageView>(R.id.imagenLectura)
+
+                            if (estadoLectura == "Pendiente" || estadoLectura == "Sin Leer") {
+                                imagenLectura.setImageResource(R.mipmap.pom)
+                            } else if (estadoLectura == "Leido") {
+                                imagenLectura.setImageResource(R.mipmap.pomcheack)
+                            }
+
+                            val mangaNum = mangaDetalle?.mangaNum ?: 0f
+                            val mangaNumText = if (mangaNum == mangaNum.toInt().toFloat()) {
+                                mangaNum.toInt().toString()
+                            } else {
+                                mangaNum.toString()
+                            }
+
+                            val estadoAgregado = mangaDetalle?.estadoAgregado
+                            Log.i("aristidevs", "Valor de estadoAgregado: $estadoAgregado")
+
+                            if (estadoAgregado?.toInt() == 0) {
+                                binding.imagenLectura.isVisible = false
+                                binding.btnMarcarLeido.isVisible = false
+                                binding.btnAgregarManga.isVisible = true
+                                binding.botonEliminarManga.isVisible = false
+                                Log.i("aristidevs", "Paso por valor a 0")
+                            } else {
+                                binding.imagenLectura.isVisible = true
+                                binding.btnMarcarLeido.isVisible = true
+                                binding.btnAgregarManga.isVisible = false
+                                binding.botonEliminarManga.isVisible = true
+                                Log.i("aristidevs", "Paso por valor a 1")
+                            }
+
+                            Log.i("aristidevs", "Valor de despues del if: $estadoAgregado")
+                            Log.i("aristidevs", "Ya mamo")
+
+                            if (mangaDetalle != null) {
+                                Picasso.get()
+                                    .load(mangaDetalle.mangaImg)
+                                    .into(binding.imgManga)
+                                binding.txtTituloMangaYnum.text = "${mangaDetalle.serieNom} - ${mangaNumText}"
+                                binding.txtDescripcion.text = mangaDetalle.mangaDesc
+                                binding.txtAutor.text = mangaDetalle.serieAut
+                            }
                         }
-                        val mangaNum = mangaDetalle?.mangaNum ?: 0f  // Si es null, asignamos un valor predeterminado (0f)
-                        val mangaNumText = if (mangaNum == mangaNum.toInt().toFloat()) {
-                            mangaNum.toInt().toString() // Si es entero, lo mostramos sin decimales
-                        } else {
-                            mangaNum.toString() // Si tiene decimales, lo mostramos completo
-                        }
-                        val estadoAgregado = mangaDetalle?.estadoAgregado
-                        Log.i("aristidevs", "Valor de estadoAgregado: $estadoAgregado")
-                        if (estadoAgregado?.toInt() == 0) {
-                            binding.imagenLectura.isVisible = false  // Hacer invisible la imagen
-                            binding.btnMarcarLeido.isVisible = false  // Hacer invisible el botón "Marcar Leído"
-                            binding.btnAgregarManga.isVisible = true
-                            binding.botonEliminarManga.isVisible = false
-                            Log.i("aristidevs", "Paso por valor a 0")
-                        } else{
-                            binding.imagenLectura.isVisible = true  // Hacer visible la imagen
-                            binding.btnMarcarLeido.isVisible = true  // Hacer visible el botón "Marcar Leído"5BA4F5
-                            binding.btnAgregarManga.isVisible = false
-                            binding.botonEliminarManga.isVisible = true
-                            // Cambiar el estilo del botón "Agregar Manga"
-                            Log.i("aristidevs", "Paso por valor a 1")
-                        }
-                        Log.i("aristidevs", "Valor de despues del if: $estadoAgregado")
-                        Log.i("aristidevs", "Ya mamo")
-                        if (mangaDetalle != null) {
-                            // Cargar la imagen con Picasso
-                            Picasso.get()
-                                .load(mangaDetalle.mangaImg)  // URL de la imagen
-                                .into(binding.imgManga)  // ImageView donde se cargará la imagen
-                            binding.txtTituloMangaYnum.text = "${mangaDetalle.serieNom} - ${mangaNumText}"
-                            binding.txtDescripcion.text = mangaDetalle.mangaDesc
-                            binding.txtAutor.text = mangaDetalle.serieAut
+                    } else {
+                        runOnUiThread {
+                            showError("No se encontraron datos del manga")
                         }
                     }
+                } else {
+                    Log.i("aristidevs", "No funciona, algo salió mal")
+                    runOnUiThread {
+                        showError("Error al cargar el manga")
+                    }
                 }
-            } else {
-                Log.i("aristidevs", "No funciona, algo salió mal")
+            } catch (e: Exception) {
+                Log.e("aristidevs", "Error: ${e.message}")
+                runOnUiThread {
+                    showError("Error de conexión: ${e.message}")
+                }
             }
         }
     }
@@ -244,12 +291,12 @@ class DetalleMangaActivity : AppCompatActivity() {
                         val estadoLectura = mangaDetalle?.estadoLectura
                         if (estadoLectura != null) {
                             val nuevoEstadoLectura = when (estadoLectura) {
-                                "Pendiente", "Sin Leer" -> 3  // Si es Pendiente o Sin Leer, el estado es 2
-                                "Leido" -> 2  // Si es Leido, el estado es 1
-                                else -> return@runOnUiThread  // Si no es ninguno de estos, no hacemos nada
+                                "Pendiente", "Sin Leer" -> 3
+                                "Leido" -> 2
+                                else -> return@runOnUiThread
                             }
                             val marcarLeidoRequest = MarcarLeidoRequest(id_manga, id_usuario, nuevoEstadoLectura)
-                            // Realizamos el POST con Retrofit
+
                             CoroutineScope(Dispatchers.IO).launch {
                                 try {
                                     val responsePost = retrofit.create(ApiServiceManga::class.java)
@@ -258,14 +305,14 @@ class DetalleMangaActivity : AppCompatActivity() {
                                     if (responsePost.isSuccessful) {
                                         val responseBody = responsePost.body()
                                         if (responseBody != null) {
-                                            // Si la respuesta es exitosa, actualizamos la imagen
                                             Log.i("MarcarLeido", "Estado de lectura actualizado a: ${responseBody.estadoLectura}")
 
-                                            // Actualizamos la imagen en función del nuevo estado de lectura
-                                            if (responseBody.estadoLectura == 2 || responseBody.estadoLectura == 1) {
-                                                imagenLectura.setImageResource(R.mipmap.pom)  // Imagen para "Pendiente" o "Sin Leer"
-                                            } else if (responseBody.estadoLectura == 3) {
-                                                imagenLectura.setImageResource(R.mipmap.pomcheack)  // Imagen para "Leído"
+                                            runOnUiThread {
+                                                if (responseBody.estadoLectura == 2 || responseBody.estadoLectura == 1) {
+                                                    imagenLectura.setImageResource(R.mipmap.pom)
+                                                } else if (responseBody.estadoLectura == 3) {
+                                                    imagenLectura.setImageResource(R.mipmap.pomcheack)
+                                                }
                                             }
                                         }
                                     } else {

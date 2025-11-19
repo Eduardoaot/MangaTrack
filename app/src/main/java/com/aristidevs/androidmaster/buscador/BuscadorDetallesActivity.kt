@@ -50,9 +50,14 @@ class BuscadorDetallesActivity : AppCompatActivity() {
         binding.rvResutados.adapter = adapter
 
         binding.txtBusqueda.text = name
+        binding.txtBusqueda.isSelected = true
+
+        // Forzar que el TextView se comporte como si tuviera el foco
+        binding.txtBusqueda.postDelayed({
+            binding.txtBusqueda.isSelected = true
+        }, 100)
 
         searchSeries(name)
-
     }
 
     private fun showLoadingState() {
